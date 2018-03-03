@@ -28,13 +28,11 @@ class DetailView: UIView, UITableViewDataSource, UITableViewDelegate {
     var addToCartButton: UIButton!
     var delegate: DetailViewDelegate?
     var currPost: Post!
+    var currUser: Users!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         layer.cornerRadius = 3
         clipsToBounds = true
         backgroundColor = .white
@@ -48,9 +46,7 @@ class DetailView: UIView, UITableViewDataSource, UITableViewDelegate {
         addToCartButton = UIButton(frame: CGRect(x: 0, y: frame.height - 50, width: frame.width, height: 50))
         addToCartButton.backgroundColor = Constants.feedBackGroundColor
         addToCartButton.setTitle("INTERESTED", for: .normal)
-        
-        addToCartButton.setTitleColor(.white, for: .normal)
-        addToCartButton.setTitleColor(.lightGray, for: .disabled)
+        addToCartButton.setTitleColor(Constants.cellColor, for: .normal)
         addToCartButton.titleLabel?.font = UIFont(name: "SFUIText-Medium", size: 14)
         addSubview(addToCartButton)
         
@@ -61,12 +57,15 @@ class DetailView: UIView, UITableViewDataSource, UITableViewDelegate {
         let screenWidth = UIScreen.main.bounds.width
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
         tableView.layer.backgroundColor = UIColor.black.cgColor
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.dataSource = self
+        tableView.delegate = self
         self.addSubview(tableView)
     }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return currPost.numInterested.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -75,14 +74,22 @@ class DetailView: UIView, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
-        
-        cell.textLabel?.text = currPost.numInterested[0]
+        cell.textLabel?.text = currUser.name
+        cell.textLabel?.font = UIFont(name: "SFUIText-Medium", size: 20)
+        cell.textLabel?.textAlignment = .center
+        Utils.getImage(withUrl: currUser.imageUrl!).then { img in
+            cell.imageView?.image = img
+        }
+        cell.imageView?.frame = CGRect(x: 10, y: 10, width: cell.frame.height * 0.01, height: cell.frame.height * 0.01)
+        cell.imageView?.layer.cornerRadius = (cell.imageView?.frame.size.width)!/2
+        cell.imageView?.layer.masksToBounds = true
+        cell.contentMode = .scaleAspectFill
         return cell
-        
-        //if cell is self then highlight green
-        //if no one is interested, createAlert when pressing icon - Woops! Looks like no one is interested yet. Be the first!
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

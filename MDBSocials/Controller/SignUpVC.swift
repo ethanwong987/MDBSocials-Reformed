@@ -99,7 +99,7 @@ class SignUpVC: UIViewController {
         profilePicButton.setTitle("PROFILE \n PICTURE", for: .normal)
         profilePicButton.titleLabel?.numberOfLines = 0
         profilePicButton.titleLabel?.textColor = .white
-        profilePicButton.titleLabel?.font = UIFont(name: "Helvetica Neue", size: 30)
+        profilePicButton.titleLabel?.font = UIFont(name: "SFUIText-Medium", size: 30)
         profilePicButton.titleLabel?.textAlignment = .center
         profilePicButton.addTarget(self, action: #selector(pickImage), for: .touchUpInside)
         profilePicButton.layer.borderColor = UIColor.white.cgColor
@@ -148,11 +148,22 @@ class SignUpVC: UIViewController {
             let ref = Database.database().reference()
             let uid = (user?.uid)!
             let userRef = ref.child("Users").child(uid)
-            userRef.setValue(["uid":uid, "name":name, "email":email, "username":username, "imageUrl": ""])
-            self.performSegue(withIdentifier: "signUpToFeed", sender: self)}
-        else {
-            let alert = self.createAlert(warning: error!.localizedDescription)
-            self.present(alert, animated: true, completion: nil)
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpeg"
+            let imageData = UIImageJPEGRepresentation(self.profilePicButton.currentImage!, 0.7)
+            userRef.setValue(["uid":uid, "name":name, "email":email, "username":username, "password":password, "imageUrl": ""])
+            let key = userRef.childByAutoId().key
+            let storage = Storage.storage().reference().child("Users").child(key)
+            storage.putData(imageData!, metadata: metadata, completion: { (metadata, error) in
+                if error == nil {
+                    let imageUrl = metadata?.downloadURL()?.absoluteString
+                    userRef.updateChildValues(["imageUrl": imageUrl])
+                    self.performSegue(withIdentifier: "signUpToFeed", sender: self)
+                    } else {
+                        let alert = self.createAlert(warning: error!.localizedDescription)
+                        self.present(alert, animated: true, completion: nil)
+                    }
+            })
             }
         })
     }

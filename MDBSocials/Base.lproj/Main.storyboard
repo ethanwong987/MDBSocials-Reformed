@@ -32,6 +32,7 @@
         <!--Navigation Controller-->
         <scene sceneID="5rP-z0-XN1">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PuN-vy-cq1" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="sMX-P9-8CR" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vKh-o6-b8g">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -41,7 +42,6 @@
                         <segue destination="BPw-d6-Gb3" kind="relationship" relationship="rootViewController" id="VDu-Hu-vLk"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PuN-vy-cq1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="798" y="177"/>
         </scene>
@@ -66,6 +66,7 @@
         <!--FeedVC-->
         <scene sceneID="xD3-AZ-fzR">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BbE-Ug-zbE" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="BPw-d6-Gb3" customClass="FeedVC" customModule="MDBSocials" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eTg-Dm-QMT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -80,7 +81,6 @@
                         <segue destination="BYZ-38-t0r" kind="show" identifier="toLogin" id="MbR-9m-srU"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BbE-Ug-zbE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1642" y="177"/>
         </scene>
@@ -109,9 +109,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="QXf-Wv-1L4"/>
                     </view>
-                    <connections>
-                        <segue destination="BPw-d6-Gb3" kind="show" identifier="backToFeedWithInfo" id="oaP-Zx-Wra"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Itc-6w-bKr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -119,7 +116,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="oaP-Zx-Wra"/>
-        <segue reference="0YB-lj-ZXM"/>
+        <segue reference="gV1-IO-S9z"/>
     </inferredMetricsTieBreakers>
 </document>

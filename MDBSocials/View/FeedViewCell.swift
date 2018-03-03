@@ -38,6 +38,8 @@ class FeedViewCell: UICollectionViewCell {
     var profImage: UIImage!
     var activityIndicator: UIActivityIndicatorView!
     
+    var currUser: Users!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         for subview in self.subviews {
@@ -46,7 +48,7 @@ class FeedViewCell: UICollectionViewCell {
         self.backgroundColor = Constants.cellColor
         setUpUI()
         setUpProfileImage()
-        setupActivityIndidicator()
+        //setupActivityIndidicator()
         setupEventText()
         setUpWhoInterested()
         setUpNumInterested()
@@ -56,20 +58,20 @@ class FeedViewCell: UICollectionViewCell {
         createTimeText()
     }
     
-    func setupActivityIndidicator(){
-        activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 50, y: self.frame.height/2 - 20, width: 40, height: 40))
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.backgroundColor = (UIColor (white: 0.3, alpha: 0.8))
-        activityIndicator.layer.cornerRadius = 5
-        addSubview(activityIndicator)
-    }
-    func startLoadingView() {
-        activityIndicator.startAnimating()
-    }
-    
-    func stopLoadingView() {
-        activityIndicator.stopAnimating()
-    }
+//    func setupActivityIndidicator(){
+//        activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 50, y: self.frame.height/2 - 20, width: 40, height: 40))
+//        activityIndicator.hidesWhenStopped = true
+//        activityIndicator.backgroundColor = (UIColor (white: 0.3, alpha: 0.8))
+//        activityIndicator.layer.cornerRadius = 5
+//        addSubview(activityIndicator)
+//    }
+//    func startLoadingView() {
+//        activityIndicator.startAnimating()
+//    }
+//
+//    func stopLoadingView() {
+//        activityIndicator.stopAnimating()
+//    }
     
     func setUpUI() {
         let sfw = self.frame.width
@@ -87,10 +89,13 @@ class FeedViewCell: UICollectionViewCell {
         let sfw = self.frame.width
         let sfh = self.frame.height
         profileImageView = UIImageView(frame: CGRect(x: sfw * 0.02, y: sfh * 0.02, width: sfh * 0.15, height: sfh*0.15))
-        profImage = UIImage(named: "ethan")
+        Utils.getImage(withUrl: currUser.imageUrl!).then { img in
+            self.profileImageView.image = img
+        }
         profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
-        profileImageView.image = profImage
         profileImageView.clipsToBounds = true
+        profileImageView.layer.borderColor = Constants.cellColor?.cgColor
+        profileImageView.layer.borderWidth = 1
         profileImageView.contentMode = .scaleAspectFill
         addSubview(profileImageView)
     }
@@ -117,7 +122,7 @@ class FeedViewCell: UICollectionViewCell {
     }
     
     func setUpText(label: UILabel) {
-        label.font = UIFont(name: "Helvetica Neue", size: 17)
+        label.font = UIFont(name: "SFUIText-Medium", size: 17)
         label.textColor = .white
         label.adjustsFontForContentSizeCategory = true
     }
@@ -127,7 +132,7 @@ class FeedViewCell: UICollectionViewCell {
         let sfh = self.frame.height
         
         numInterested = UILabel(frame: CGRect(x: sfw * 0.85, y: sfh * 0.89, width: sfw, height: sfh * 0.1))
-        numInterested.font = UIFont(name: "Helvetica Neue", size: 20)
+        numInterested.font = UIFont(name: "SFUIText-Medium", size: 20)
         numInterested.textColor = Constants.feedBackGroundColor
         numInterested.adjustsFontForContentSizeCategory = true
         numInterested.text = numInterestedName
@@ -163,7 +168,7 @@ class FeedViewCell: UICollectionViewCell {
         let sfh = self.frame.height
         postTitle = UILabel(frame: CGRect(x: sfw * 0.02, y: sfh * 0.7, width: sfw, height: sfh * 0.3))
         postTitle.textColor = Constants.feedBackGroundColor
-        postTitle.font = UIFont(name: "Helvetica Neue", size: 30)
+        postTitle.font = UIFont(name: "SFUIText-Medium", size: 30)
         postTitle.adjustsFontForContentSizeCategory = true
         postTitle.text = postTitleName
         addSubview(postTitle)
@@ -172,9 +177,9 @@ class FeedViewCell: UICollectionViewCell {
     func setupEventPoster() {
         let sfw = self.frame.width
         let sfh = self.frame.height
-        posterText = UILabel(frame: CGRect(x: sfw * 0.2, y: sfh * 0.01, width: sfw, height: sfh * 0.2))
-        posterText.font = UIFont(name: "Helvetica Neue", size: 20)
-        posterText.textColor = .black
+        posterText = UILabel(frame: CGRect(x: sfw * 0.2, y: sfh * 0.02, width: sfw, height: sfh * 0.15))
+        posterText.font = UIFont(name: "SFUIText-Medium", size: 20)
+        posterText.textColor = Constants.cellColor
         posterText.text = posterTextName
         addSubview(posterText)
     }

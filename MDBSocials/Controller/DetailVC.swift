@@ -50,7 +50,7 @@ class DetailVC: UIViewController {
         viewTitle = UILabel(frame: CGRect(x: vfw*0.04, y: vfh*0.12, width: vfw-30, height: vfh*0.1))
         viewTitle.text = currPost.date! + "  " + currPost.time!
         viewTitle.textColor = Constants.feedBackGroundColor
-        viewTitle.font = UIFont(name:"HelveticaNeue", size: 24)
+        viewTitle.font = UIFont(name:"SFUIText-Medium", size: 24)
         
         borderBox = UILabel(frame: CGRect(x: vfw*0.04, y: vfh*0.58, width: vfw-30, height: vfh*0.4))
         borderBox.backgroundColor = Constants.feedBackGroundColor?.withAlphaComponent(0.6)
@@ -90,7 +90,7 @@ class DetailVC: UIViewController {
         let vfw = view.frame.width
         let vfh = view.frame.height
         eventTitle = UILabel(frame: CGRect(x: vfw*0.08, y: vfh * 0.58, width: vfw-50, height: vfh*0.1))
-        eventTitle.font = UIFont(name: "HelveticaNeue", size: 40)
+        eventTitle.font = UIFont(name: "SFUIText-Medium", size: 40)
         eventTitle.text = currPost.postTitle
         eventTitle.textColor = .white
         view.addSubview(eventTitle)
@@ -107,7 +107,7 @@ class DetailVC: UIViewController {
         
         desc = UITextView(frame: CGRect(x: vfw*0.12, y: vfh*0.68, width: vfw-90, height: vfw*0.18))
         desc.text = currPost.text
-        desc.font = UIFont(name: "HelveticaNeue", size: 18)
+        desc.font = UIFont(name: "SFUIText-Medium", size: 18)
         view.addSubview(desc)
     }
     
@@ -123,8 +123,9 @@ class DetailVC: UIViewController {
     @objc func whoInterestedView() {
         let navBarHeight = navigationController?.navigationBar.frame.height
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        detailView = DetailView(frame: CGRect(x: 15, y: 70, width: view.frame.width - 30, height: view.frame.height - 75 - (110 - navBarHeight! - statusBarHeight)))
+        detailView = DetailView(frame: CGRect(x: 15, y: 70, width: view.frame.width - 30, height: view.frame.height - 100))
         detailView.currPost = currPost
+        detailView.currUser = currUser
         detailView.delegate = self
         modalView = AKModalView(view: detailView)
         modalView.dismissAnimation = .FadeOut
@@ -137,13 +138,13 @@ class DetailVC: UIViewController {
         let vfh = view.frame.height
         let interestText = UILabel(frame: CGRect(x: vfw*0.68, y: vfh * 0.92, width: vfw*1.2, height: vfh*0.1))
         interestText.text = "Interested"
-        interestText.font = UIFont(name:"HelveticaNeue", size: 15)
+        interestText.font = UIFont(name:"SFUIText-Medium", size: 15)
         interestText.backgroundColor = .clear
         interestText.textColor = .black
         view.addSubview(interestText)
         interestLabel = UILabel(frame: CGRect(x: vfw*0.76, y: vfh*0.82, width: vfw*0.1, height: vfh*0.16))
         interestLabel.text = String(describing: currPost.numInterested.count)
-        interestLabel.font = UIFont(name: "HelveticaNeue", size: 35)
+        interestLabel.font = UIFont(name: "SFUIText-Medium", size: 35)
         view.addSubview(interestLabel)
     }
     

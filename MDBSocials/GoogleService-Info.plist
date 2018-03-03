@@ -7,34 +7,34 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>893817542546-ophakmpvir1n1samq12j0rjo506c3e3j.apps.googleusercontent.com</string>
+	<string>844406353751-vcj297agqathrfmrgvgnlmj0a7cs9dci.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.893817542546-ophakmpvir1n1samq12j0rjo506c3e3j</string>
+	<string>com.googleusercontent.apps.844406353751-vcj297agqathrfmrgvgnlmj0a7cs9dci</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAGzuTUrYBICrtPz_ajbq3HoYZI3yLDkd4</string>
+	<string>AIzaSyAzx_xeOX7t4hn4a5MPZZVNR9wY9xmmka4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>893817542546</string>
+	<string>844406353751</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.MDBSocialsProjReform</string>
+	<string>com.example.MDBSocialsProjReformed</string>
 	<key>PROJECT_ID</key>
-	<string>mdbsocials-9038f</string>
+	<string>mdbsocialsfinal</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mdbsocials-9038f.appspot.com</string>
+	<string>mdbsocialsfinal.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:893817542546:ios:27f561a86f8af4a9</string>
+	<string>1:844406353751:ios:aa76ca2f816edcea</string>
 	<key>DATABASE_URL</key>
-	<string>https://mdbsocials-9038f.firebaseio.com</string>
+	<string>https://mdbsocialsfinal.firebaseio.com</string>
 </dict>
 </plist>

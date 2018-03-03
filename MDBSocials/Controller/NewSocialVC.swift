@@ -180,7 +180,7 @@ class NewSocialVC: UIViewController {
         selectFromLibraryButton.layer.borderColor = Constants.feedBackGroundColor?.cgColor
         selectFromLibraryButton.layer.borderWidth = 3
         selectFromLibraryButton.setTitleColor(Constants.feedBackGroundColor, for: .normal)
-        selectFromLibraryButton.titleLabel?.font = UIFont(name: "Helvetica Neue", size: 50)
+        selectFromLibraryButton.titleLabel?.font = UIFont(name: "SFUIText-Medium", size: 50)
         selectFromLibraryButton.titleLabel?.textAlignment = .center
         selectFromLibraryButton.addTarget(self, action: #selector(pickImage), for: .touchUpInside)
         

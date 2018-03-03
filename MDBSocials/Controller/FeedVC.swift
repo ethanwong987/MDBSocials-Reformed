@@ -35,7 +35,6 @@ class FeedVC: UIViewController {
                     self.changePosts()
                 }
         }
-        
     }
     
     func getPosts() {
@@ -50,7 +49,6 @@ class FeedVC: UIViewController {
                     } .then {_ in
                         DispatchQueue.main.async {
                             self.postView.reloadData()
-                            
                         }
                 }
             }
@@ -65,6 +63,7 @@ class FeedVC: UIViewController {
     }
     
     func setUpNavBar(){
+        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New Event", style: .plain, target: self, action: #selector(toNewSocial))
         self.navigationItem.rightBarButtonItem?.tintColor = Constants.feedBackGroundColor
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signOut))
@@ -126,13 +125,13 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         cell.setupEventImage()
         cell.createDateText()
         cell.createTimeText()
-        
         cell.postTitleName = currentPost.postTitle
         cell.posterTextName = currentPost.poster
         cell.numInterestedName = String(describing: currentPost.numInterested.count)
         cell.dateTextName = currentPost.date
         cell.timeTextName = currentPost.time
         cell.image = currentPost.image
+        cell.currUser = currentUser
         cell.layer.borderWidth = 1.0
         cell.layer.masksToBounds = true
         cell.layer.shadowColor = UIColor.lightGray.cgColor
