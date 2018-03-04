@@ -10,6 +10,9 @@ import UIKit
 import Firebase
 import ChameleonFramework
 import PromiseKit
+import CoreGraphics
+import CoreLocation
+import MapKit
 //make scrollview!
 class DetailVC: UIViewController, UIScrollViewDelegate {
     var eventPic: UIImageView!
@@ -28,32 +31,42 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     var whoInterestedButton: UIButton!
     
     var scrollView: UIScrollView!
-    var containerView = UIView()
     
     var modalView: AKModalView!
     var detailView: DetailView!
-    var delegate: EventVC!
+    var mapView: MKMapView!
+    var delegate: NewSocialVC!
     
+    var appleButton: UIButton!
+    
+    var currentLocation: CLLocationCoordinate2D?
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpScrollView()
         setUpUI()
         setUpEventPic()
         setUpEventPoster()
         setUpEventTitle()
         setUpEventDescription()
         setUpInterestedButton()
+        setUpMap()
+        setUpAppleMapsButton()
         setUpWhoInterestedButton()
         setUpInterestCount()
+        setUpScrollView()
+        self.locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        scrollView.frame = view.bounds
-        containerView.frame = CGRect(x:0, y:0, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
+    override func viewDidAppear(_ animated: Bool) {
+        self.addPointer()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -69,11 +82,22 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     }
     
     func setUpScrollView() {
-        self.scrollView = UIScrollView()
-        self.scrollView.delegate = self
-        self.scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height)
-        containerView = UIView()
-        scrollView.addSubview(containerView)
+        scrollView = UIScrollView(frame: CGRect(x:0, y:0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        scrollView.delegate = self
+        scrollView.addSubview(appleButton)
+        scrollView.addSubview(viewTitle)
+        scrollView.addSubview(borderBox)
+        scrollView.addSubview(eventPic)
+        scrollView.addSubview(eventPosters)
+        scrollView.addSubview(eventTitle)
+        scrollView.addSubview(textBox)
+        scrollView.addSubview(desc)
+        scrollView.addSubview(mapView)
+        scrollView.addSubview(whoInterestedButton)
+        scrollView.addSubview(interestButton)
+        scrollView.addSubview(interestLabel)
+
+        scrollView.contentSize = CGSize(width: view.frame.width, height: mapView.frame.maxY)
         view.addSubview(scrollView)
     }
     
@@ -94,8 +118,8 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         borderBox.layer.cornerRadius = 10
         borderBox.layer.borderWidth = 1
         borderBox.layer.borderColor = UIColor.white.cgColor
-        containerView.addSubview(borderBox)
-        containerView.addSubview(viewTitle)
+        view.addSubview(borderBox)
+        view.addSubview(viewTitle)
     }
     
     func setUpEventPic(){
@@ -112,7 +136,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         eventPic.layer.borderColor = UIColor.white.cgColor
         eventPic.layer.cornerRadius = 10
         eventPic.clipsToBounds = true
-        containerView.addSubview(eventPic)
+        view.addSubview(eventPic)
     }
     
     func setUpEventPoster(){
@@ -121,7 +145,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         eventPosters = UILabel(frame: CGRect(x: vfw*0.08, y: vfh * 0.7, width: vfw-50, height: vfh*0.1))
         eventPosters.text = "Created By: \(currPost.poster!)"
         eventPosters.textColor = .black
-        containerView.addSubview(eventPosters)
+        view.addSubview(eventPosters)
     }
     
     func setUpEventTitle(){
@@ -131,7 +155,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         eventTitle.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 24)
         eventTitle.text = currPost.postTitle
         eventTitle.textColor = .white
-        containerView.addSubview(eventTitle)
+        view.addSubview(eventTitle)
     }
     
     func setUpEventDescription(){
@@ -141,12 +165,51 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         textBox.backgroundColor = UIColor.white
         textBox.layer.masksToBounds = true
         textBox.layer.cornerRadius = 10
-        containerView.addSubview(textBox)
+        view.addSubview(textBox)
         
         desc = UITextView(frame: CGRect(x: vfw*0.12, y: vfh*0.6, width: vfw-90, height: vfw*0.18))
         desc.text = currPost.text
         desc.font = UIFont(name: "HelveticaNeue", size: 18)
-        containerView.addSubview(desc)
+        view.addSubview(desc)
+    }
+    
+    func setUpMap() {
+        let vfw = view.frame.width
+        let vfh = view.frame.height
+        mapView = MKMapView(frame: CGRect(x: vfw*0.04, y: vfh*0.97, width: vfw-30, height: vfh*0.4))
+        mapView.mapType = .standard
+        mapView.layer.cornerRadius = 10
+        mapView.layer.masksToBounds = true
+        view.addSubview(mapView)
+    }
+    
+    func setUpAppleMapsButton() {
+        let vfw = view.frame.width
+        let vfh = view.frame.height
+        appleButton = UIButton(frame: CGRect(x: vfw*0.04, y: vfh*0.89, width: vfw-30, height: vfh*0.06))
+        appleButton.setTitle("Open in Apple Maps!", for: .normal)
+        appleButton.backgroundColor = Constants.feedBackGroundColor
+        appleButton.addTarget(self, action: #selector(openAppleMaps), for: .touchUpInside)
+        appleButton.setTitleColor(.white, for: .normal)
+        appleButton.layer.cornerRadius = 10
+        appleButton.clipsToBounds = true
+        appleButton.layer.borderColor = UIColor.white.cgColor
+        appleButton.layer.borderWidth = 1
+        view.addSubview(appleButton)
+    }
+    
+    func addPointer(){
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude: currPost.latitude!, longitude: currPost.longitude!)
+        mapView.addAnnotation(annotation)
+        mapView.setRegion(MKCoordinateRegionMake(annotation.coordinate, MKCoordinateSpanMake(0.001, 0.001)), animated: true)
+    }
+    
+    @objc func openAppleMaps() {
+        let coordinate = CLLocationCoordinate2DMake(37.786272279415272, -122.40631651595199)
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
+        mapItem.name = "Destination/Target Address or Name"
+        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
     }
     
     func setUpWhoInterestedButton() {
@@ -159,7 +222,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         whoInterestedButton.layer.borderWidth = 1
         whoInterestedButton.setImage(UIImage(named:"whiteperson"), for: .normal)
         whoInterestedButton.addTarget(self, action: #selector(whoInterestedView), for: .touchUpInside)
-        containerView.addSubview(whoInterestedButton)
+        view.addSubview(whoInterestedButton)
     }
     
     @objc func whoInterestedView() {
@@ -182,13 +245,13 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         interestLabel.textColor = .white
         interestLabel.text = String(describing: currPost.numInterested.count)
         interestLabel.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 50)
-        containerView.addSubview(interestLabel)
+        view.addSubview(interestLabel)
     }
     
     func setUpInterestedButton(){
         let vfw = view.frame.width
         let vfh = view.frame.height
-        interestButton = UIButton(frame: CGRect(x: vfw*0.5, y: vfh*0.72, width: vfw*0.45, height: vfh*0.06))
+        interestButton = UIButton(frame: CGRect(x: vfw*0.04, y: vfh*0.81, width: vfw-30, height: vfh*0.06))
         interestButton.setTitle("I'm Interested!", for: .normal)
         interestButton.setTitleColor(.white, for: .normal)
         interestButton.layer.cornerRadius = 10
@@ -203,7 +266,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
                 interestButton.backgroundColor = Constants.MDBBlue
             }
             interestButton.addTarget(self, action: #selector(userIsInterested), for: .touchUpInside)
-            containerView.addSubview(interestButton)
+            view.addSubview(interestButton)
         }
     }
     
@@ -254,6 +317,14 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
 extension DetailVC: DetailViewDelegate {
     func dismissDetailView() {
         modalView.dismiss()
+    }
+}
+
+extension DetailVC: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("Updated location")
+        guard let currentLoc: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        self.currentLocation = currentLoc
     }
 }
 

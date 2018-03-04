@@ -71,8 +71,8 @@ class FeedVC: UIViewController {
                             }
                     }
                 }
+                
                 self.sortDate()
-                self.sortTime()
             }
         })
     }

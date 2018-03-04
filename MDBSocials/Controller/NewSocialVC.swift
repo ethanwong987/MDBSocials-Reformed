@@ -10,6 +10,8 @@ import UIKit
 import SkyFloatingLabelTextField
 import Firebase
 import ChameleonFramework
+import LocationPicker
+import CoreLocation
 
 class NewSocialVC: UIViewController {
     var eventName: SkyFloatingLabelTextField!
@@ -25,9 +27,12 @@ class NewSocialVC: UIViewController {
     var profileImage: UIButton!
     var selectFromLibraryButton: UIButton!
     var takePictureButton: UIButton!
+    var mapButton: UIButton!
     var timePicker: UIDatePicker!
     var picker = UIImagePickerController()
     var datePicker: UIDatePicker!
+    
+    var selectedLocation: CLLocationCoordinate2D!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +43,7 @@ class NewSocialVC: UIViewController {
         createTimePicker()
         createEventLabel()
         createButtons()
+        setUpMapButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -230,13 +236,42 @@ class NewSocialVC: UIViewController {
         backToLogin.addTarget(self, action: #selector(backToFeed), for: .touchUpInside)
         
         
-        takePictureButton = UIButton(frame: CGRect(x: vfw*0.45, y: vfh*0.25, width: vfw*0.1, height: vfh*0.06))
+        takePictureButton = UIButton(frame: CGRect(x: vfw*0.45, y: vfh*0.25, width: vfw*0.1, height: vfh*0.05))
         takePictureButton.setImage(UIImage(named: "camera"), for: .normal)
         takePictureButton.addTarget(self, action: #selector(selectPictureFromCamera), for: .touchUpInside)
         
         view.addSubview(takePictureButton)
         view.addSubview(backToLogin)
         view.addSubview(createPostButton)
+    }
+    
+    func setUpMapButton() {
+        let vfw = view.frame.width
+        let vfh = view.frame.height
+        mapButton = UIButton(frame: CGRect(x: vfw*0.45, y: vfh*0.25, width: vfw*0.1, height: vfh*0.05))
+        mapButton.backgroundColor = .white
+        mapButton.addTarget(self, action: #selector(toMap), for: .touchUpInside)
+        view.addSubview(mapButton)
+    }
+    
+    @objc func toMap() {
+        let locationPicker = LocationPickerViewController()
+        
+        locationPicker.showCurrentLocationButton = true
+        locationPicker.currentLocationButtonBackground = Constants.MDBBlue!
+        locationPicker.showCurrentLocationInitially = true
+        locationPicker.mapType = .standard
+        
+        locationPicker.useCurrentLocationAsHint = true
+        locationPicker.resultRegionDistance = 100
+        locationPicker.completion = { location in
+            self.selectedLocation = location?.coordinate
+        }
+        
+        
+        self.present(locationPicker, animated: true) {
+            print("Selecting location")
+        }
     }
     
     @objc func selectPictureFromCamera() {
@@ -271,7 +306,8 @@ class NewSocialVC: UIViewController {
                 let poster = self.posterName.text!
                 let numInterested = 0
                 let postTitle = self.eventName.text!
-                var newPost = ["postTitle": postTitle, "date": date, "time": time, "numInterested": numInterested, "text": postText, "poster": poster, "imageUrl": "", "posterId": posterId] as [String : Any]
+                let location = self.selectedLocation!
+                var newPost = ["postTitle": postTitle, "date": date, "time": time, "numInterested": numInterested, "text": postText, "poster": poster, "imageUrl": "", "posterId": posterId, "latitude":location.latitude, "longitude":location.longitude] as [String : Any]
                 let key = postsRef.childByAutoId().key
                 let storage = Storage.storage().reference().child("Posts").child(key)
                 storage.putData(imageData!, metadata: metadata, completion: { (metadata, error) in

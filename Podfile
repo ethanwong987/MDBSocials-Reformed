@@ -26,6 +26,8 @@ pod 'SwiftyBeaver'
 pod 'TLFloatLabelTextField'
 pod 'TweeTextField'
 pod 'SkyFloatingLabelTextField', '~> 3.0'
+pod 'LocationPicker'
+pod 'LocationPickerViewController'
   target 'MDBSocialsTests' do
     inherit! :search_paths
     # Pods for testing

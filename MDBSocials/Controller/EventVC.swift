@@ -161,7 +161,6 @@ class EventVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDetails" {
             let detailVC = segue.destination as! DetailVC
-            detailVC.delegate = self
             detailVC.currPost = currPost
             detailVC.currUser = currentUser!
         }

@@ -23,6 +23,8 @@ class Post: Mappable {
     var date: String?
     var time: String?
     var postTitle: String?
+    var latitude: Double?
+    var longitude: Double?
     
     required init?(map: Map) {
     }
@@ -37,6 +39,8 @@ class Post: Mappable {
         time                            <- map["time"]
         posterId                        <- map["posterId"]
         poster                          <- map["poster"]
+        latitude                        <- map["latitude"]
+        longitude                       <- map["longitude"]
         
     }
 }
