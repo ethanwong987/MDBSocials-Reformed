@@ -272,7 +272,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     func setUpInterestedButton(){
         let vfw = view.frame.width
         let vfh = view.frame.height
-        interestButton = UIButton(frame: CGRect(x: vfw*0.08, y: vfh * 0.7, width: vfw-50, height: vfh*0.05))
+        interestButton = UIButton(frame: CGRect(x: vfw*0.08, y: vfh * 0.73, width: vfw-45, height: vfh*0.05))
         interestButton.setTitle("I'm Interested!", for: .normal)
         interestButton.setTitleColor(.white, for: .normal)
         interestButton.layer.cornerRadius = 10
