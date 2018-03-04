@@ -28,6 +28,7 @@ pod 'TweeTextField'
 pod 'SkyFloatingLabelTextField', '~> 3.0'
 pod 'LocationPicker'
 pod 'LocationPickerViewController'
+pod 'LyftSDK/API'
   target 'MDBSocialsTests' do
     inherit! :search_paths
     # Pods for testing

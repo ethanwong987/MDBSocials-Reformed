@@ -65,6 +65,7 @@ PODS:
   - leveldb-library (1.20)
   - LocationPicker (1.1.0)
   - LocationPickerViewController (3.3)
+  - LyftSDK/API (1.0.6)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -107,6 +108,7 @@ DEPENDENCIES:
   - JGProgressHUD
   - LocationPicker
   - LocationPickerViewController
+  - LyftSDK/API
   - ObjectMapper
   - PromiseKit (~> 4.0)
   - PromiseKit/Alamofire
@@ -151,6 +153,7 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   LocationPicker: 94dbd15ee053646d5c275d44b4dfce8634d66041
   LocationPickerViewController: 8190e6bc3562e5fe5c52d92b23786f634b6de42c
+  LyftSDK: 17eb5abdb12f72203b68a1eac982823bfadda743
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
   PromiseKit: 743e497a5f505a470d3bbbf4ce0663c1268af0a4
@@ -161,6 +164,6 @@ SPEC CHECKSUMS:
   TLFloatLabelTextField: 3e2bb61eeb4d9d23d0704bbded7bb1ccf1ae8c6b
   TweeTextField: 78606e5d0d5fc08deb3f925074fe034c835d566f
 
-PODFILE CHECKSUM: 23e2e54414cfcca79195421b0eef2511b4109f24
+PODFILE CHECKSUM: 13151c0c2f6848ec47ccf4d5ce3c162cde80e08a
 
 COCOAPODS: 1.4.0

@@ -194,7 +194,7 @@ class NewSocialVC: UIViewController {
         borderBox.layer.masksToBounds = true
         borderBox.layer.cornerRadius = 10
         
-        eventPic = UIImageView(frame: CGRect(x: vfw*0.04, y: vfh*0.05, width: vfw-30, height: vfh*0.2))
+        eventPic = UIImageView(frame: CGRect(x: vfw*0.04, y: vfh*0.05, width: vfw-30, height: vfh*0.15))
         selectFromLibraryButton = UIButton(frame: eventPic.frame)
         selectFromLibraryButton.setTitle("SELECT \n AN IMAGE", for: .normal)
         selectFromLibraryButton.titleLabel?.numberOfLines = 0
@@ -236,8 +236,12 @@ class NewSocialVC: UIViewController {
         backToLogin.addTarget(self, action: #selector(backToFeed), for: .touchUpInside)
         
         
-        takePictureButton = UIButton(frame: CGRect(x: vfw*0.45, y: vfh*0.25, width: vfw*0.1, height: vfh*0.05))
-        takePictureButton.setImage(UIImage(named: "camera"), for: .normal)
+        takePictureButton = UIButton(frame: CGRect(x: vfw*0.15, y: vfh*0.22, width: vfw*0.3, height: vfh*0.05))
+        takePictureButton.backgroundColor = Constants.feedBackGroundColor
+        takePictureButton.setTitle("Take a photo", for: .normal)
+        takePictureButton.layer.cornerRadius = 10
+        takePictureButton.layer.borderColor = UIColor.white.cgColor
+        takePictureButton.layer.borderWidth = 1
         takePictureButton.addTarget(self, action: #selector(selectPictureFromCamera), for: .touchUpInside)
         
         view.addSubview(takePictureButton)
@@ -248,8 +252,12 @@ class NewSocialVC: UIViewController {
     func setUpMapButton() {
         let vfw = view.frame.width
         let vfh = view.frame.height
-        mapButton = UIButton(frame: CGRect(x: vfw*0.45, y: vfh*0.25, width: vfw*0.1, height: vfh*0.05))
-        mapButton.backgroundColor = .white
+        mapButton = UIButton(frame: CGRect(x: vfw*0.6, y: vfh*0.22, width: vfw*0.3, height: vfh*0.05))
+        mapButton.backgroundColor = Constants.feedBackGroundColor
+        mapButton.setTitle("Pick Location", for: .normal)
+        mapButton.layer.cornerRadius = 10
+        mapButton.layer.borderColor = UIColor.white.cgColor
+        mapButton.layer.borderWidth = 1
         mapButton.addTarget(self, action: #selector(toMap), for: .touchUpInside)
         view.addSubview(mapButton)
     }

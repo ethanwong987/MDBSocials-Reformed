@@ -37,12 +37,12 @@ class SignUpVC: UIViewController {
         let vfw = view.frame.width
         let vfh = view.frame.height
         fullname = SkyFloatingLabelTextField(frame: CGRect(x: vfw * 0.07, y: vfh*0.4, width: vfw - 60, height: 45))
-        fullname.lineColor = Constants.MDBOrange!
-        fullname.selectedTitleColor = Constants.MDBOrange!
-        fullname.selectedLineColor = Constants.MDBOrange!
-        fullname.tintColor = Constants.MDBOrange
+        fullname.lineColor = Constants.feedBackGroundColor!
+        fullname.selectedTitleColor = Constants.feedBackGroundColor!
+        fullname.selectedLineColor = Constants.feedBackGroundColor!
+        fullname.tintColor = Constants.feedBackGroundColor
         fullname.placeholder = "Full Name"
-        fullname.placeholderColor = Constants.MDBOrange!
+        fullname.placeholderColor = Constants.feedBackGroundColor!
         view.addSubview(fullname)
     }
     
@@ -50,12 +50,12 @@ class SignUpVC: UIViewController {
         let vfw = view.frame.width
         let vfh = view.frame.height
         userName = SkyFloatingLabelTextField(frame: CGRect(x: vfw * 0.07, y: vfh*0.5, width: vfw - 60, height: 45))
-        userName.lineColor = Constants.MDBOrange!
-        userName.selectedTitleColor = Constants.MDBOrange!
-        userName.selectedLineColor = Constants.MDBOrange!
-        userName.tintColor = Constants.MDBOrange
+        userName.lineColor = Constants.feedBackGroundColor!
+        userName.selectedTitleColor = Constants.feedBackGroundColor!
+        userName.selectedLineColor = Constants.feedBackGroundColor!
+        userName.tintColor = Constants.feedBackGroundColor
         userName.placeholder = "Username"
-        userName.placeholderColor = Constants.MDBOrange!
+        userName.placeholderColor = Constants.feedBackGroundColor!
         view.addSubview(userName)
     }
     
@@ -64,11 +64,11 @@ class SignUpVC: UIViewController {
         let vfh = view.frame.height
         passWord = SkyFloatingLabelTextField(frame: CGRect(x: vfw * 0.07, y: vfh*0.7, width:
             vfw - 60, height: 45))
-        passWord.lineColor = Constants.MDBOrange!
-        passWord.selectedTitleColor = Constants.MDBOrange!
-        passWord.selectedLineColor = Constants.MDBOrange!
+        passWord.lineColor = Constants.feedBackGroundColor!
+        passWord.selectedTitleColor = Constants.feedBackGroundColor!
+        passWord.selectedLineColor = Constants.feedBackGroundColor!
         passWord.placeholder = "Password"
-        passWord.placeholderColor = Constants.MDBOrange!
+        passWord.placeholderColor = Constants.feedBackGroundColor!
         view.addSubview(passWord)
     }
     
@@ -76,12 +76,12 @@ class SignUpVC: UIViewController {
         let vfw = view.frame.width
         let vfh = view.frame.height
         emailText = SkyFloatingLabelTextField(frame: CGRect(x: vfw * 0.07, y: vfh*0.6, width: vfw - 60, height: 45))
-        emailText.lineColor = Constants.MDBOrange!
-        emailText.selectedTitleColor = Constants.MDBOrange!
-        emailText.selectedLineColor = Constants.MDBOrange!
-        emailText.tintColor = Constants.MDBOrange
+        emailText.lineColor = Constants.feedBackGroundColor!
+        emailText.selectedTitleColor = Constants.feedBackGroundColor!
+        emailText.selectedLineColor = Constants.feedBackGroundColor!
+        emailText.tintColor = Constants.feedBackGroundColor
         emailText.placeholder = "Email"
-        emailText.placeholderColor = Constants.MDBOrange!
+        emailText.placeholderColor = Constants.feedBackGroundColor!
         view.addSubview(emailText)
     }
     
@@ -89,7 +89,7 @@ class SignUpVC: UIViewController {
         let vfw = view.frame.width
         let vfh = view.frame.height
         
-        view.backgroundColor = Constants.MDBBlue
+        view.backgroundColor = Constants.cellColor
         borderBox = UILabel(frame: CGRect(x: vfw*0.04, y: vfh*0.38, width: vfw-30, height: vfh * 0.55))
         borderBox.backgroundColor = UIColor.white.withAlphaComponent(0.6)
         borderBox.layer.masksToBounds = true
@@ -125,13 +125,13 @@ class SignUpVC: UIViewController {
         
         signUpButton = UIButton(frame: CGRect(x: vfw * 0.07, y: vfh * 0.81, width: vfw - 50, height: 40))
         signUpButton.setTitle("Create Account", for: .normal)
-        signUpButton.backgroundColor = Constants.MDBOrange
+        signUpButton.backgroundColor = Constants.feedBackGroundColor
         signUpButton.addTarget(self, action: #selector(signUpToFeed), for: .touchUpInside)
         signUpButton.layer.cornerRadius = 10
         
         backToLogin = UIButton(frame: CGRect(x: vfw * 0.07, y: vfh * 0.87, width: vfw - 50, height: 40))
         backToLogin.setTitle("Back To Login", for: .normal)
-        backToLogin.setTitleColor(Constants.MDBBlue, for: .normal)
+        backToLogin.setTitleColor(.white, for: .normal)
         backToLogin.addTarget(self, action: #selector(toLogin), for: .touchUpInside)
         
         view.addSubview(backToLogin)

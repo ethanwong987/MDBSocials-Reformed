@@ -14,5 +14,6 @@ struct Constants {
     static let MDBOrange = HexColor("#ff9502")
     static let cellColor = HexColor("#32435e")
     static let feedBackGroundColor = HexColor("#66ffb7")
+    static let lyftColor = HexColor("#ff66ff")
 }
 

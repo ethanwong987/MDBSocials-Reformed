@@ -38,6 +38,8 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     var delegate: NewSocialVC!
     
     var appleButton: UIButton!
+    var lyftLabel: UILabel!
+    var lyftText: String!
     
     var currentLocation: CLLocationCoordinate2D?
     let locationManager = CLLocationManager()
@@ -46,7 +48,6 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         setUpUI()
         setUpEventPic()
-        setUpEventPoster()
         setUpEventTitle()
         setUpEventDescription()
         setUpInterestedButton()
@@ -54,6 +55,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         setUpAppleMapsButton()
         setUpWhoInterestedButton()
         setUpInterestCount()
+        setUpLyftLabel()
         setUpScrollView()
         self.locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
@@ -69,6 +71,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.queryLyft()
         
         // Hide the navigation bar on the this view controller
         self.tabBarController?.tabBar.isHidden = true
@@ -88,7 +91,6 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         scrollView.addSubview(viewTitle)
         scrollView.addSubview(borderBox)
         scrollView.addSubview(eventPic)
-        scrollView.addSubview(eventPosters)
         scrollView.addSubview(eventTitle)
         scrollView.addSubview(textBox)
         scrollView.addSubview(desc)
@@ -96,6 +98,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         scrollView.addSubview(whoInterestedButton)
         scrollView.addSubview(interestButton)
         scrollView.addSubview(interestLabel)
+        scrollView.addSubview(lyftLabel)
 
         scrollView.contentSize = CGSize(width: view.frame.width, height: mapView.frame.maxY)
         view.addSubview(scrollView)
@@ -139,15 +142,6 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         view.addSubview(eventPic)
     }
     
-    func setUpEventPoster(){
-        let vfw = view.frame.width
-        let vfh = view.frame.height
-        eventPosters = UILabel(frame: CGRect(x: vfw*0.08, y: vfh * 0.7, width: vfw-50, height: vfh*0.1))
-        eventPosters.text = "Created By: \(currPost.poster!)"
-        eventPosters.textColor = .black
-        view.addSubview(eventPosters)
-    }
-    
     func setUpEventTitle(){
         let vfw = view.frame.width
         let vfh = view.frame.height
@@ -186,7 +180,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     func setUpAppleMapsButton() {
         let vfw = view.frame.width
         let vfh = view.frame.height
-        appleButton = UIButton(frame: CGRect(x: vfw*0.04, y: vfh*0.89, width: vfw-30, height: vfh*0.06))
+        appleButton = UIButton(frame: CGRect(x: vfw*0.04, y: vfh*0.8, width: vfw-30, height: vfh*0.06))
         appleButton.setTitle("Open in Apple Maps!", for: .normal)
         appleButton.backgroundColor = Constants.feedBackGroundColor
         appleButton.addTarget(self, action: #selector(openAppleMaps), for: .touchUpInside)
@@ -202,7 +196,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude: currPost.latitude!, longitude: currPost.longitude!)
         mapView.addAnnotation(annotation)
-        mapView.setRegion(MKCoordinateRegionMake(annotation.coordinate, MKCoordinateSpanMake(0.001, 0.001)), animated: true)
+        mapView.setRegion(MKCoordinateRegionMake(annotation.coordinate, MKCoordinateSpanMake(0.002, 0.002)), animated: true)
     }
     
     @objc func openAppleMaps() {
@@ -210,6 +204,33 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
         mapItem.name = "Destination/Target Address or Name"
         mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
+    }
+    
+    func setUpLyftLabel() {
+        let vfw = view.frame.width
+        let vfh = view.frame.height
+        self.lyftLabel = UILabel(frame: CGRect(x: vfw*0.04, y: vfh*0.87, width: vfw-30, height: vfh*0.07))
+        self.lyftLabel.text = "Your car ride"
+        self.lyftLabel.backgroundColor = Constants.lyftColor
+        self.lyftLabel.text = lyftText
+        self.lyftLabel.textColor = .white
+        self.lyftLabel.layer.cornerRadius = 10
+        self.lyftLabel.layer.borderWidth = 1
+        self.lyftLabel.layer.borderColor = UIColor.white.cgColor
+        self.lyftLabel.clipsToBounds = true
+        self.view.addSubview(self.lyftLabel)
+    }
+    func queryLyft(){
+        let vfw = view.frame.width
+        let vfh = view.frame.height
+        let eventLocation = CLLocationCoordinate2DMake(currPost.latitude!, currPost.longitude!)
+        if self.currentLocation != nil {
+            LyftHelper.getRideEstimate(pickup: self.currentLocation!, dropoff: eventLocation) { costEstimate in
+                self.lyftText = "A Lyft will cost $" + String(describing: costEstimate.estimate!.maxEstimate.amount) + " your location."
+            }
+        } else {
+            print("Cant get current location")
+        }
     }
     
     func setUpWhoInterestedButton() {
@@ -251,7 +272,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     func setUpInterestedButton(){
         let vfw = view.frame.width
         let vfh = view.frame.height
-        interestButton = UIButton(frame: CGRect(x: vfw*0.04, y: vfh*0.81, width: vfw-30, height: vfh*0.06))
+        interestButton = UIButton(frame: CGRect(x: vfw*0.08, y: vfh * 0.7, width: vfw-50, height: vfh*0.05))
         interestButton.setTitle("I'm Interested!", for: .normal)
         interestButton.setTitleColor(.white, for: .normal)
         interestButton.layer.cornerRadius = 10
