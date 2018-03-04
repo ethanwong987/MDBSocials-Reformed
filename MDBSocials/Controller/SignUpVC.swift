@@ -160,10 +160,14 @@ class SignUpVC: UIViewController {
                     userRef.updateChildValues(["imageUrl": imageUrl])
                     self.performSegue(withIdentifier: "signUpToFeed", sender: self)
                     } else {
+                    
                         let alert = self.createAlert(warning: error!.localizedDescription)
                         self.present(alert, animated: true, completion: nil)
                     }
             })
+            if let error = error {
+                print(error.localizedDescription)
+            }
             }
         })
     }

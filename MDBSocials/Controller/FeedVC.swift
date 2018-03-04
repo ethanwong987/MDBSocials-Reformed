@@ -15,42 +15,64 @@ import SwiftyJSON
 
 class FeedVC: UIViewController {
     var posts: [Post] = []
+    var myPosts: [Post] = []
     var auth = Auth.auth()
     var postView: UICollectionView!
     var postsRef: DatabaseReference = Database.database().reference().child("Posts")
     var storage: StorageReference = Storage.storage().reference()
     var currentUser: Users?
     var currPost: Post!
+    var postUser: Users?
+    var numPosts: Int = 0
     var navBar: UINavigationBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        FBFunctions.getCurrentUser().then {user in
+        FirebaseClient.getCurrentUser().then {user in
             self.currentUser = user
             } .then { _ in
                 DispatchQueue.main.async {
                     self.setUpNavBar()
-                    self.getPosts()
                     self.setUpCollectionView()
+                    self.getPosts()
                     self.changePosts()
+        
                 }
         }
     }
     
+    func sortDate() {
+        self.posts.sort { (post1, post2) -> Bool in
+            return post1.date! > post2.date!
+        }
+    }
+    
+    func sortTime() {
+        self.posts.sort { (post1, post2) -> Bool in
+            return post1.time! > post2.time!
+        }
+    }
+
     func getPosts() {
         let ref = Database.database().reference()
+        
         ref.child("Posts").observe(.childAdded, with: { (snapshot) in
             if var dict = snapshot.value as? [String: Any] {
                 dict["id"] = snapshot.key
                 let newPost = Post(JSON: dict)
-                self.posts.insert(newPost!, at: 0)
-                Utils.getImage(withUrl: (newPost?.imageUrl)!).then { img in
-                    newPost?.image = img
-                    } .then {_ in
-                        DispatchQueue.main.async {
-                            self.postView.reloadData()
-                        }
+                if self.posts.map({$0.id}).contains(where: {$0 == newPost?.id}) == false {
+                    self.posts.insert(newPost!, at: 0)
+                    self.numPosts = self.numPosts + 1
+                    Utils.getImage(withUrl: (newPost?.imageUrl)!).then { img in
+                        newPost?.image = img
+                        } .then {_ in
+                            DispatchQueue.main.async {
+                                self.postView.reloadData()
+                            }
+                    }
                 }
+                self.sortDate()
+                self.sortTime()
             }
         })
     }
@@ -69,7 +91,7 @@ class FeedVC: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signOut))
         self.navigationItem.leftBarButtonItem?.tintColor = Constants.feedBackGroundColor
         self.navigationController?.navigationBar.barTintColor = Constants.cellColor
-        self.title = "Your Feed"
+        self.title = "My Feed"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         
     }
@@ -80,7 +102,7 @@ class FeedVC: UIViewController {
     
     @objc func signOut() {
         UserAuth.logOut()
-        performSegue(withIdentifier: "toLogin", sender: self)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func setUpCollectionView(){
@@ -111,7 +133,7 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return posts.count
+        return numPosts
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -132,6 +154,8 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         cell.timeTextName = currentPost.time
         cell.image = currentPost.image
         cell.currUser = currentUser
+        cell.currPost = currentPost
+        
         cell.layer.borderWidth = 1.0
         cell.layer.masksToBounds = true
         cell.layer.shadowColor = UIColor.lightGray.cgColor

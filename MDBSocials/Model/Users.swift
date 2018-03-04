@@ -18,6 +18,7 @@ class Users: Mappable {
     var username: String?
     var imageUrl: String?
     var image: UIImage?
+    var eventIds: [String] = []
     
     required init?(map: Map) {
     }
@@ -29,6 +30,7 @@ class Users: Mappable {
         password                        <- map["password"]
         email                           <- map["email"]
         imageUrl                        <- map["imageUrl"]
+        eventIds                        <- map["eventIds"]
     }
 }
 

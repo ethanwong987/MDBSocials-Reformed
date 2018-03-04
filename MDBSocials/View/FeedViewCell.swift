@@ -15,6 +15,9 @@
 //
 
 import UIKit
+import Firebase
+import PromiseKit
+import SwiftyJSON
 
 class FeedViewCell: UICollectionViewCell {
     
@@ -37,8 +40,9 @@ class FeedViewCell: UICollectionViewCell {
     var profileImageView: UIImageView!
     var profImage: UIImage!
     var activityIndicator: UIActivityIndicatorView!
-    
+    var currPost: Post!
     var currUser: Users!
+    var postUser: Users!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -89,8 +93,19 @@ class FeedViewCell: UICollectionViewCell {
         let sfw = self.frame.width
         let sfh = self.frame.height
         profileImageView = UIImageView(frame: CGRect(x: sfw * 0.02, y: sfh * 0.02, width: sfh * 0.15, height: sfh*0.15))
-        Utils.getImage(withUrl: currUser.imageUrl!).then { img in
-            self.profileImageView.image = img
+        firstly {
+            return FirebaseClient.fetchUser(id: currPost.posterId!)
+            }.then { user -> Void in
+                //print("user is")
+                //print(user.toJSON())
+                self.postUser = user
+                //print(self.postUser.toJSON())
+            } .then { _ in
+                DispatchQueue.main.async {
+                    Utils.getImage(withUrl: self.postUser.imageUrl!).then { img in
+                        self.profileImageView.image = img
+                    }
+                }
         }
         profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
         profileImageView.clipsToBounds = true
