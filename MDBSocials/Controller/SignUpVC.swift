@@ -151,7 +151,7 @@ class SignUpVC: UIViewController {
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
             let imageData = UIImageJPEGRepresentation(self.profilePicButton.currentImage!, 0.7)
-            userRef.setValue(["uid":uid, "name":name, "email":email, "username":username, "password":password, "imageUrl": ""])
+            userRef.setValue(["uid":uid, "name":name, "email":email, "username":username, "password":password, "imageUrl": "", "eventIds": []])
             let key = userRef.childByAutoId().key
             let storage = Storage.storage().reference().child("Users").child(key)
             storage.putData(imageData!, metadata: metadata, completion: { (metadata, error) in

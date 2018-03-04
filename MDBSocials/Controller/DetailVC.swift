@@ -188,7 +188,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     func setUpInterestedButton(){
         let vfw = view.frame.width
         let vfh = view.frame.height
-        interestButton = UIButton(frame: CGRect(x: vfw*0.08, y: vfh*0.72, width: vfw*0.5, height: vfh*0.06))
+        interestButton = UIButton(frame: CGRect(x: vfw*0.5, y: vfh*0.72, width: vfw*0.45, height: vfh*0.06))
         interestButton.setTitle("I'm Interested!", for: .normal)
         interestButton.setTitleColor(.white, for: .normal)
         interestButton.layer.cornerRadius = 10
@@ -200,7 +200,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             interestButton.addTarget(self, action: #selector(createAlert), for: .touchUpInside)
         } else {
             if currPost.numInterested.contains(currUser.id!) {
-                interestButton.backgroundColor = .green
+                interestButton.backgroundColor = Constants.MDBBlue
             }
             interestButton.addTarget(self, action: #selector(userIsInterested), for: .touchUpInside)
             containerView.addSubview(interestButton)
@@ -208,12 +208,11 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     }
     
     @objc func createAlert(_ sender: UIButton) {
-        print("hi")
-        sender.backgroundColor = .green
+        sender.backgroundColor = Constants.MDBBlue
     }
     
     @objc func userIsInterested(_ sender: UIButton) {
-        if sender.backgroundColor == .green {
+        if sender.backgroundColor == Constants.MDBBlue {
             sender.backgroundColor = .clear
             var index = 0
             for id in currPost.numInterested {
@@ -237,7 +236,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
                 }
             }
         } else {
-            sender.backgroundColor = .green
+            sender.backgroundColor = Constants.MDBBlue
             currPost.numInterested.append(currUser.id!)
             currUser.eventIds.append(currPost.id!)
             let postRef = Database.database().reference().child("Posts").child(currPost.id!)
@@ -245,7 +244,6 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
                 Database.database().reference().child("Users").child(currUser.id!)
             postRef.updateChildValues(["numInterested" : currPost.numInterested])
             userRef.updateChildValues(["eventIds" : currUser.eventIds])
-        
         }
             
         interestLabel.text = String(describing: currPost.numInterested.count)

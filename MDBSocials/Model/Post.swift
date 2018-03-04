@@ -37,6 +37,7 @@ class Post: Mappable {
         time                            <- map["time"]
         posterId                        <- map["posterId"]
         poster                          <- map["poster"]
+        
     }
 }
 

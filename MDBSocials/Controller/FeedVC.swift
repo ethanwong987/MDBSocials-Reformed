@@ -101,6 +101,7 @@ class FeedVC: UIViewController {
     }
     
     @objc func signOut() {
+        print("\(currentUser!) has signed out.")
         UserAuth.logOut()
         self.dismiss(animated: true, completion: nil)
     }

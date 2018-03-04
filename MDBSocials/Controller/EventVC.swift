@@ -25,6 +25,7 @@ class EventVC: UIViewController {
     var postUser: Users?
     var numberOfPosts: Int = 0
     var navBar: UINavigationBar!
+    var refreshControl: UIRefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,19 +37,8 @@ class EventVC: UIViewController {
                     self.changeNavBar()
                     self.setUpCollectionView()
                     self.getPosts()
-                    //self.changeMyPosts()
                     self.changePosts()
                 }
-        }
-    }
-    
-    func filterArray(postArray: [Post]) {
-        for id in (currentUser?.eventIds)! {
-            for post in posts {
-                if id == post.id {
-                    myPosts.append(post)
-                }
-            }
         }
     }
     
@@ -69,15 +59,29 @@ class EventVC: UIViewController {
         }
     }
     
+    func filterArray(postArray: [Post]) {
+        for id in (currentUser?.eventIds)! {
+            if self.posts.map({$0.id}).contains(where: {$0 == id}) == true {
+                for post in posts {
+                    if id == post.id && self.myPosts.map({$0.id}).contains(where: {$0 == id}) == false {
+                        myPosts.append(post)
+                    }
+                }
+            }
+        }
+    }
+    
     func getPosts() {
         let ref = Database.database().reference()
-        
         ref.child("Posts").observe(.childAdded, with: { (snapshot) in
             if var dict = snapshot.value as? [String: Any] {
                 dict["id"] = snapshot.key
                 let newPost = Post(JSON: dict)
                 if self.posts.map({$0.id}).contains(where: {$0 == newPost?.id}) == false {
                     self.posts.insert(newPost!, at: 0)
+                    if self.currentUser?.id == newPost?.posterId {
+                        self.myPosts.insert(newPost!, at: 0)
+                    }
                     Utils.getImage(withUrl: (newPost?.imageUrl)!).then { img in
                         newPost?.image = img
                         } .then {_ in
@@ -87,7 +91,6 @@ class EventVC: UIViewController {
                     }
                 }
                 self.filterArray(postArray: self.posts)
-                print(self.posts)
                 self.sortDate()
                 self.sortTime()
             }
@@ -138,7 +141,21 @@ class EventVC: UIViewController {
         postView.dataSource = self
         postView.register(FeedViewCell.self, forCellWithReuseIdentifier: "post")
         postView.backgroundColor = Constants.feedBackGroundColor
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshCollectionView), for: .valueChanged)
+        refreshControl.tintColor = Constants.cellColor
+        let myAttribute = [NSAttributedStringKey.foregroundColor: Constants.cellColor]
+        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Your Events ...", attributes: myAttribute)
+        postView.addSubview(refreshControl)
         view.addSubview(postView)
+    }
+    
+    @objc func refreshCollectionView() {
+        DispatchQueue.main.async{
+            self.postView.reloadData()
+            self.refreshControl.endRefreshing()
+        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

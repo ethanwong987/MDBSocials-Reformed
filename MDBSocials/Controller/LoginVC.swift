@@ -51,6 +51,7 @@ class LoginVC: UIViewController {
     private func checkIfUserIsSignedIn() {
         Auth.auth().addStateDidChangeListener { (auth, user) in
             if user != nil {
+                print("\(user!) is signed in.")
                 self.performSegue(withIdentifier: "toFeed", sender: self)
             }
         }
