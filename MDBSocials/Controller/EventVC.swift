@@ -62,13 +62,12 @@ class EventVC: UIViewController {
     }
 
     func filterArray(postArray: [Post]) {
-        for id in (currentUser?.eventIds)! {
-            if self.posts.map({$0.id}).contains(where: {$0 == id}) == true {
-                for post in posts {
-                    if id == post.id && self.myPosts.map({$0.id}).contains(where: {$0 == id}) == false {
-                        myPosts.append(post)
-                    }
-                }
+        self.posts.removeAll()
+        let id = currentUser?.id
+        for post in self.posts {
+            if post.posterId == id || post.numInterested.contains(id!) {
+                self.posts.append(post)
+                self.numPosts += 1
             }
         }
     }
