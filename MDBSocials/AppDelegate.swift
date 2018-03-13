@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import LyftSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         UITabBar.appearance().tintColor = Constants.feedBackGroundColor
-
+        LyftConfiguration.developer = (token: "p3DOKBHaxqNVFaBNSwIgFic5PXnNiK7wiHHfZiVl3TWDu/TnXygWvOqUwNcHrFlxKMKiaN1QCXh23Fj9W8zYxBrnYxvocOlp1ejxt3k/HBHvgD7Ua+YIVAo=", clientId: "qOw85jU8ZOkf")
         return true
     }
 

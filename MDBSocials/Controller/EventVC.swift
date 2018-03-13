@@ -16,30 +16,38 @@ import SwiftyJSON
 class EventVC: UIViewController {
     var posts: [Post] = []
     var myPosts: [Post] = []
-    var auth = Auth.auth()
     var postView: UICollectionView!
-    var postsRef: DatabaseReference = Database.database().reference().child("Posts")
-    var storage: StorageReference = Storage.storage().reference()
     var currentUser: Users?
     var currPost: Post!
     var postUser: Users?
     var numberOfPosts: Int = 0
     var navBar: UINavigationBar!
     var refreshControl: UIRefreshControl!
+    var numPosts: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        setUpNavBar()
+//        changeNavBar()
+//        setUpCollectionView()
+//        change()
+//    }
+        self.setUpNavBar()
+        self.changeNavBar()
+        self.setUpCollectionView()
         FirebaseClient.getCurrentUser().then {user in
             self.currentUser = user
             } .then { _ in
                 DispatchQueue.main.async {
-                    self.setUpNavBar()
-                    self.changeNavBar()
-                    self.setUpCollectionView()
+                    self.changePosts()
                     self.getPosts()
                     self.changePosts()
                 }
-        }
+            }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.changePosts()
     }
     
     func changeNavBar() {
@@ -52,13 +60,7 @@ class EventVC: UIViewController {
             return post1.date! > post2.date!
         }
     }
-    
-    func sortTime() {
-        self.posts.sort { (post1, post2) -> Bool in
-            return post1.time! > post2.time!
-        }
-    }
-    
+
     func filterArray(postArray: [Post]) {
         for id in (currentUser?.eventIds)! {
             if self.posts.map({$0.id}).contains(where: {$0 == id}) == true {
@@ -92,29 +94,22 @@ class EventVC: UIViewController {
                 }
                 self.filterArray(postArray: self.posts)
                 self.sortDate()
-                self.sortTime()
+                //self.sortTime()
             }
         })
     }
     
     func changePosts() {
-        let ref = Database.database().reference()
-        ref.child("Posts").observe(.childChanged, with: { (snapshot) in
+        if posts.count != numPosts {
             self.postView.reloadData()
-        })
+            numPosts = posts.count
+        }
     }
-    
-//    func changeMyPosts() {
-//        let ref = Database.database().reference()
-//        ref.child("Users").observe(.childChanged, with: { (snapshot) in
-//            self.postView.reloadData()
-//        })
-//    }
-    
     
     func setUpNavBar(){
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New Event", style: .plain, target: self, action: #selector(toNewSocial))
+        
         self.navigationItem.rightBarButtonItem?.tintColor = Constants.feedBackGroundColor
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signOut))
         self.navigationItem.leftBarButtonItem?.tintColor = Constants.feedBackGroundColor
@@ -163,6 +158,7 @@ class EventVC: UIViewController {
             let detailVC = segue.destination as! DetailVC
             detailVC.currPost = currPost
             detailVC.currUser = currentUser!
+            detailVC.delegate = self
         }
     }
 }
@@ -174,13 +170,13 @@ extension EventVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return myPosts.count
+        return posts.count
         
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "post", for: indexPath) as! FeedViewCell
-        let currentPost = myPosts[indexPath.row]
+        let currentPost = posts[indexPath.row]
         
         cell.setupEventText()
         cell.setUpNumInterested()
@@ -194,7 +190,7 @@ extension EventVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
         cell.dateTextName = currentPost.date
         cell.timeTextName = currentPost.time
         cell.image = currentPost.image
-        cell.currUser = currentUser
+  
         cell.currPost = currentPost
         
         cell.layer.borderWidth = 1.0
@@ -223,7 +219,7 @@ extension EventVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        currPost = myPosts[indexPath.row]
+        currPost = posts[indexPath.row]
         performSegue(withIdentifier: "toDetails", sender: self)
     }
 }

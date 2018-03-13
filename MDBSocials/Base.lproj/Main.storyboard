@@ -102,7 +102,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V0Q-ap-Od9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-135" y="204"/>
+            <point key="canvasLocation" x="-298" y="89"/>
         </scene>
         <!--DetailVC-->
         <scene sceneID="6f3-cM-YhW">
@@ -175,7 +175,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="VpC-8a-pBN"/>
-        <segue reference="mBw-1m-xmH"/>
+        <segue reference="4jv-K6-bFz"/>
+        <segue reference="oSs-b2-Fju"/>
     </inferredMetricsTieBreakers>
 </document>

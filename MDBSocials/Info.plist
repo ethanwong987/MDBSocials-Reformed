@@ -4,6 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>lyft</string>
+	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Use this app</string>
 	<key>CFBundleExecutable</key>

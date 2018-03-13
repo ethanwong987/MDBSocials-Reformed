@@ -25,6 +25,7 @@ class FeedVC: UIViewController {
     var postUser: Users?
     var numPosts: Int = 0
     var navBar: UINavigationBar!
+    var delegate: EventVC?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,15 +42,22 @@ class FeedVC: UIViewController {
         }
     }
     
-    func sortDate() {
-        self.posts.sort { (post1, post2) -> Bool in
-            return post1.date! > post2.date!
+    override func viewWillAppear(_ animated: Bool) {
+        let events = (self.tabBarController!.viewControllers![1] as! UINavigationController).viewControllers[0] as! EventVC
+        print("hello")
+        events.posts.removeAll()
+        let id = currentUser?.id
+        for post in self.posts {
+            if post.posterId == id || post.numInterested.contains(id!) {
+                events.posts.append(post)
+                events.numPosts += 1
+            }
         }
     }
     
-    func sortTime() {
+    func sortDate() {
         self.posts.sort { (post1, post2) -> Bool in
-            return post1.time! > post2.time!
+            return post1.date! > post2.date!
         }
     }
 
@@ -71,7 +79,6 @@ class FeedVC: UIViewController {
                             }
                     }
                 }
-                
                 self.sortDate()
             }
         })

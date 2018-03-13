@@ -89,7 +89,7 @@ class DetailView: UIView, UITableViewDataSource, UITableViewDelegate {
                     cell.textLabel?.text = self.postUser.name
                     Utils.getImage(withUrl: self.postUser.imageUrl!).then { img in
                         cell.imageView?.image = img
-                    }
+                        }// if img != img then reload data
                     cell.textLabel?.font = UIFont(name: "SFUIText-Medium", size: 20)
                     cell.textLabel?.textAlignment = .center
                     cell.imageView?.frame = CGRect(x: 10, y: 10, width: cell.frame.height * 0.01, height: cell.frame.height * 0.01)

@@ -13,7 +13,8 @@ import PromiseKit
 import CoreGraphics
 import CoreLocation
 import MapKit
-//make scrollview!
+import LyftSDK
+
 class DetailVC: UIViewController, UIScrollViewDelegate {
     var eventPic: UIImageView!
     var eventPosters: UILabel!
@@ -31,21 +32,28 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     var whoInterestedButton: UIButton!
     
     var scrollView: UIScrollView!
-    
+    var delegate: EventVC!
+    var feedDelegate: FeedVC!
     var modalView: AKModalView!
     var detailView: DetailView!
     var mapView: MKMapView!
-    var delegate: NewSocialVC!
     
     var appleButton: UIButton!
-    var lyftLabel: UILabel!
-    var lyftText: String!
+    var lyftLabel: UIButton!
+    //why no lyftButton
+    
     
     var currentLocation: CLLocationCoordinate2D?
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
         setUpUI()
         setUpEventPic()
         setUpEventTitle()
@@ -57,21 +65,15 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         setUpInterestCount()
         setUpLyftLabel()
         setUpScrollView()
-        self.locationManager.requestWhenInUseAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.addPointer()
+        self.queryLyft()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.queryLyft()
         
         // Hide the navigation bar on the this view controller
         self.tabBarController?.tabBar.isHidden = true
@@ -170,7 +172,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     func setUpMap() {
         let vfw = view.frame.width
         let vfh = view.frame.height
-        mapView = MKMapView(frame: CGRect(x: vfw*0.04, y: vfh*0.97, width: vfw-30, height: vfh*0.4))
+        mapView = MKMapView(frame: CGRect(x: vfw*0.04, y: vfh*0.94, width: vfw-30, height: vfh*0.4))
         mapView.mapType = .standard
         mapView.layer.cornerRadius = 10
         mapView.layer.masksToBounds = true
@@ -209,24 +211,48 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     func setUpLyftLabel() {
         let vfw = view.frame.width
         let vfh = view.frame.height
-        self.lyftLabel = UILabel(frame: CGRect(x: vfw*0.04, y: vfh*0.87, width: vfw-30, height: vfh*0.07))
-        self.lyftLabel.text = "Your car ride"
-        self.lyftLabel.backgroundColor = Constants.lyftColor
-        self.lyftLabel.text = lyftText
-        self.lyftLabel.textColor = .white
-        self.lyftLabel.layer.cornerRadius = 10
-        self.lyftLabel.layer.borderWidth = 1
-        self.lyftLabel.layer.borderColor = UIColor.white.cgColor
-        self.lyftLabel.clipsToBounds = true
-        self.view.addSubview(self.lyftLabel)
+        lyftLabel = UIButton(frame: CGRect(x: vfw*0.04, y: vfh*0.87, width: vfw-30, height: vfh*0.06))
+        lyftLabel.backgroundColor = Constants.lyftColor
+        lyftLabel.titleLabel?.textAlignment = .center
+        lyftLabel.titleLabel?.textColor = .white
+        lyftLabel.layer.cornerRadius = 10
+        lyftLabel.layer.borderWidth = 1
+        lyftLabel.addTarget(self, action: #selector(toLyft), for: .touchUpInside)
+        lyftLabel.layer.borderColor = UIColor.white.cgColor
+        lyftLabel.clipsToBounds = true
+        self.view.addSubview(lyftLabel)
     }
+    
+    @objc func toLyft() {
+        if lyftInstalled() {
+            open(scheme: "lyft://partner=YOUR_CLIENT_ID")
+        } else {
+            open(scheme: "https://www.lyft.com/signup/SDKSIGNUP?clientId=YOUR_CLIENT_ID&sdkName=iOS_direct")
+        }
+    }
+    
+    func lyftInstalled() -> Bool {
+        return UIApplication.shared.canOpenURL(URL(string: "lyft://")!)
+    }
+    
+    func open(scheme: String) {
+        if let url = URL(string: scheme) {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+    
     func queryLyft(){
         let vfw = view.frame.width
         let vfh = view.frame.height
-        let eventLocation = CLLocationCoordinate2DMake(currPost.latitude!, currPost.longitude!)
+        let eventlocation = CLLocationCoordinate2D(latitude: currPost.latitude!, longitude: currPost.longitude!)
+        print (eventlocation)
         if self.currentLocation != nil {
-            LyftHelper.getRideEstimate(pickup: self.currentLocation!, dropoff: eventLocation) { costEstimate in
-                self.lyftText = "A Lyft will cost $" + String(describing: costEstimate.estimate!.maxEstimate.amount) + " your location."
+            LyftHelper.getRideEstimate(pickup: self.currentLocation!, dropoff: eventlocation) { costEstimate in
+                self.lyftLabel.setTitle("Lyft will cost $" + String(describing: costEstimate.estimate!.maxEstimate.amount) + " from your location.", for: .normal)
             }
         } else {
             print("Cant get current location")
@@ -329,10 +355,18 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             postRef.updateChildValues(["numInterested" : currPost.numInterested])
             userRef.updateChildValues(["eventIds" : currUser.eventIds])
         }
-            
         interestLabel.text = String(describing: currPost.numInterested.count)
+        print(delegate)
+        //delegate.postView.reloadData()
 
-}
+//        delegate.posts.removeAll()
+//        let id = currUser.id
+//        for post in delegate.posts {
+//            if post.posterId == id || post.numInterested.contains(id!) {
+//                delegate.posts.append(post)
+//                }
+//            }
+    }
 }
 
 extension DetailVC: DetailViewDelegate {
@@ -344,8 +378,8 @@ extension DetailVC: DetailViewDelegate {
 extension DetailVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("Updated location")
-        guard let currentLoc: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        self.currentLocation = currentLoc
+        guard let currentLocation: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        self.currentLocation = currentLocation
     }
 }
 
