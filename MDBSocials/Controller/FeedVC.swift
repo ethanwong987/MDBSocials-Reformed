@@ -44,9 +44,8 @@ class FeedVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         let events = (self.tabBarController!.viewControllers![1] as! UINavigationController).viewControllers[0] as! EventVC
-        print("hello")
         events.posts.removeAll()
-        let id = currentUser?.id
+        let id = currentUser?.id //doesn't work correctly cuz async
         for post in self.posts {
             if post.posterId == id || post.numInterested.contains(id!) {
                 events.posts.append(post)

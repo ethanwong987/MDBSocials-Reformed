@@ -19,19 +19,11 @@ class EventVC: UIViewController {
     var postView: UICollectionView!
     var currentUser: Users?
     var currPost: Post!
-    var postUser: Users?
-    var numberOfPosts: Int = 0
-    var navBar: UINavigationBar!
     var refreshControl: UIRefreshControl!
     var numPosts: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setUpNavBar()
-//        changeNavBar()
-//        setUpCollectionView()
-//        change()
-//    }
         self.setUpNavBar()
         self.changeNavBar()
         self.setUpCollectionView()
@@ -41,13 +33,14 @@ class EventVC: UIViewController {
                 DispatchQueue.main.async {
                     self.changePosts()
                     self.getPosts()
+                    print("hi")
                     self.changePosts()
                 }
             }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.changePosts()
+        self.postView.reloadData()
     }
     
     func changeNavBar() {
@@ -62,13 +55,16 @@ class EventVC: UIViewController {
     }
 
     func filterArray(postArray: [Post]) {
+        let feed = (self.tabBarController!.viewControllers![0] as! UINavigationController).viewControllers[0] as! FeedVC
         self.posts.removeAll()
         let id = currentUser?.id
-        for post in self.posts {
+        for post in feed.posts {
             if post.posterId == id || post.numInterested.contains(id!) {
                 self.posts.append(post)
                 self.numPosts += 1
-            }
+            } //numPosts -=1 delegate when click button //CAN USE UJNOTIFICATION CENTER FOR INTERESTED BUTTON???
+            
+            
         }
     }
     

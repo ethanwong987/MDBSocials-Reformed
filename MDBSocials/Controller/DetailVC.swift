@@ -345,6 +345,10 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
                     index1 += 1
                 }
             }
+//            if delegate.numPosts != 0 {
+//                delegate.numPosts -= 1
+//                print(delegate.numPosts)
+//            }
         } else {
             sender.backgroundColor = Constants.MDBBlue
             currPost.numInterested.append(currUser.id!)
@@ -356,7 +360,8 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             userRef.updateChildValues(["eventIds" : currUser.eventIds])
         }
         interestLabel.text = String(describing: currPost.numInterested.count)
-        print(delegate)
+        //delegate.numPosts += 1
+        //print(delegate.numPosts)
         //delegate.postView.reloadData()
 
 //        delegate.posts.removeAll()
