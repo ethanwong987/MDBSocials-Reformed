@@ -9,18 +9,25 @@
 import UIKit
 import Firebase
 import LyftSDK
+import SwiftyBeaver
+let log = SwiftyBeaver.self
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         UITabBar.appearance().tintColor = Constants.feedBackGroundColor
         LyftConfiguration.developer = (token: "p3DOKBHaxqNVFaBNSwIgFic5PXnNiK7wiHHfZiVl3TWDu/TnXygWvOqUwNcHrFlxKMKiaN1QCXh23Fj9W8zYxBrnYxvocOlp1ejxt3k/HBHvgD7Ua+YIVAo=", clientId: "qOw85jU8ZOkf")
+        let console = ConsoleDestination()  // log to Xcode Console
+        let file = FileDestination()  // log to default swiftybeaver.log file
+        let cloud = SBPlatformDestination(appID: "r7xGLY", appSecret: "2mbM5xrtP9h9vquhvqsag0HfudcleN4f", encryptionKey: "tbafhvkiIldu9qsP3ztphfzvjqsnfjXf") // to cloud
+        console.format = "$DHH:mm:ss$d $L $M"
+        log.addDestination(console)
+        log.addDestination(file)
+        log.addDestination(cloud)
         return true
     }
 

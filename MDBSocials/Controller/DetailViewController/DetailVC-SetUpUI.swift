@@ -1,91 +1,19 @@
 //
-//  DetailVC.swift
+//  DetailVC-SetUpUI.swift
 //  MDBSocials
 //
-//  Created by Ethan Wong on 2/20/18.
+//  Created by Ethan Wong on 3/14/18.
 //  Copyright © 2018 Ethan Wong. All rights reserved.
 //
 
+import Foundation
 import UIKit
-import Firebase
 import ChameleonFramework
-import PromiseKit
-import CoreGraphics
-import CoreLocation
 import MapKit
-import LyftSDK
+import CoreLocation
+import CoreGraphics
 
-class DetailVC: UIViewController, UIScrollViewDelegate {
-    var eventPic: UIImageView!
-    var eventPosters: UILabel!
-    var eventTitle: UILabel!
-    var interestButton: UIButton!
-    var interestLabel: UILabel!
-    var borderBox: UILabel!
-    var textBox: UILabel!
-    var desc: UITextView!
-    var viewTitle: UILabel!
-    var isSelected = false
-    var currPost: Post!
-    var currUser: Users!
-    var picker = UIImagePickerController()
-    var whoInterestedButton: UIButton!
-    
-    var scrollView: UIScrollView!
-    var delegate: EventVC!
-    var feedDelegate: FeedVC!
-    var modalView: AKModalView!
-    var detailView: DetailView!
-    var mapView: MKMapView!
-    
-    var appleButton: UIButton!
-    var lyftLabel: UIButton!
-    //why no lyftButton
-    
-    
-    var currentLocation: CLLocationCoordinate2D?
-    let locationManager = CLLocationManager()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.locationManager.requestWhenInUseAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-        }
-        setUpUI()
-        setUpEventPic()
-        setUpEventTitle()
-        setUpEventDescription()
-        setUpInterestedButton()
-        setUpMap()
-        setUpAppleMapsButton()
-        setUpWhoInterestedButton()
-        setUpInterestCount()
-        setUpLyftLabel()
-        setUpScrollView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.addPointer()
-        self.queryLyft()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // Hide the navigation bar on the this view controller
-        self.tabBarController?.tabBar.isHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        // Show the navigation bar on other view controllers
-        self.tabBarController?.tabBar.isHidden = false
-    }
-    
+extension DetailVC {
     func setUpScrollView() {
         scrollView = UIScrollView(frame: CGRect(x:0, y:0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         scrollView.delegate = self
@@ -101,7 +29,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         scrollView.addSubview(interestButton)
         scrollView.addSubview(interestLabel)
         scrollView.addSubview(lyftLabel)
-
+        
         scrollView.contentSize = CGSize(width: view.frame.width, height: mapView.frame.maxY)
         view.addSubview(scrollView)
     }
@@ -194,20 +122,6 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         view.addSubview(appleButton)
     }
     
-    func addPointer(){
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = CLLocationCoordinate2D(latitude: currPost.latitude!, longitude: currPost.longitude!)
-        mapView.addAnnotation(annotation)
-        mapView.setRegion(MKCoordinateRegionMake(annotation.coordinate, MKCoordinateSpanMake(0.002, 0.002)), animated: true)
-    }
-    
-    @objc func openAppleMaps() {
-        let coordinate = CLLocationCoordinate2DMake(37.786272279415272, -122.40631651595199)
-        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
-        mapItem.name = "Destination/Target Address or Name"
-        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
-    }
-    
     func setUpLyftLabel() {
         let vfw = view.frame.width
         let vfh = view.frame.height
@@ -221,42 +135,6 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         lyftLabel.layer.borderColor = UIColor.white.cgColor
         lyftLabel.clipsToBounds = true
         self.view.addSubview(lyftLabel)
-    }
-    
-    @objc func toLyft() {
-        if lyftInstalled() {
-            open(scheme: "lyft://partner=YOUR_CLIENT_ID")
-        } else {
-            open(scheme: "https://www.lyft.com/signup/SDKSIGNUP?clientId=YOUR_CLIENT_ID&sdkName=iOS_direct")
-        }
-    }
-    
-    func lyftInstalled() -> Bool {
-        return UIApplication.shared.canOpenURL(URL(string: "lyft://")!)
-    }
-    
-    func open(scheme: String) {
-        if let url = URL(string: scheme) {
-            if #available(iOS 10, *) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
-        }
-    }
-    
-    func queryLyft(){
-        let vfw = view.frame.width
-        let vfh = view.frame.height
-        let eventlocation = CLLocationCoordinate2D(latitude: currPost.latitude!, longitude: currPost.longitude!)
-        print (eventlocation)
-        if self.currentLocation != nil {
-            LyftHelper.getRideEstimate(pickup: self.currentLocation!, dropoff: eventlocation) { costEstimate in
-                self.lyftLabel.setTitle("Lyft will cost $" + String(describing: costEstimate.estimate!.maxEstimate.amount) + " from your location.", for: .normal)
-            }
-        } else {
-            print("Cant get current location")
-        }
     }
     
     func setUpWhoInterestedButton() {
@@ -307,7 +185,9 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         interestButton.layer.borderWidth = 1
         
         if currPost.posterId == currUser.id {
-            interestButton.addTarget(self, action: #selector(createAlert), for: .touchUpInside)
+            interestButton.isEnabled = false
+            interestButton.backgroundColor = Constants.MDBBlue
+            interestButton.setTitle("Your Event!", for: .normal)
         } else {
             if currPost.numInterested.contains(currUser.id!) {
                 interestButton.backgroundColor = Constants.MDBBlue
@@ -316,75 +196,4 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             view.addSubview(interestButton)
         }
     }
-    
-    @objc func createAlert(_ sender: UIButton) {
-        sender.backgroundColor = Constants.MDBBlue
-    }
-    
-    @objc func userIsInterested(_ sender: UIButton) {
-        if sender.backgroundColor == Constants.MDBBlue {
-            sender.backgroundColor = .clear
-            var index = 0
-            for id in currPost.numInterested {
-                if currUser.id == id {
-                    currPost.numInterested.remove(at: index)
-                    let postRef = Database.database().reference().child("Posts").child(currPost.id!)
-                    postRef.updateChildValues(["numInterested" : currPost.numInterested])
-
-                } else {
-                    index += 1
-                }
-            }
-            var index1 = 0
-            for eventId in currUser.eventIds {
-                if currPost.id == eventId {
-                    currUser.eventIds.remove(at: index1)
-                    let postRef = Database.database().reference().child("Users").child(currUser.id!)
-                    postRef.updateChildValues(["eventIds" : currUser.eventIds])
-                } else {
-                    index1 += 1
-                }
-            }
-//            if delegate.numPosts != 0 {
-//                delegate.numPosts -= 1
-//                print(delegate.numPosts)
-//            }
-        } else {
-            sender.backgroundColor = Constants.MDBBlue
-            currPost.numInterested.append(currUser.id!)
-            currUser.eventIds.append(currPost.id!)
-            let postRef = Database.database().reference().child("Posts").child(currPost.id!)
-            let userRef =
-                Database.database().reference().child("Users").child(currUser.id!)
-            postRef.updateChildValues(["numInterested" : currPost.numInterested])
-            userRef.updateChildValues(["eventIds" : currUser.eventIds])
-        }
-        interestLabel.text = String(describing: currPost.numInterested.count)
-        //delegate.numPosts += 1
-        //print(delegate.numPosts)
-        //delegate.postView.reloadData()
-
-//        delegate.posts.removeAll()
-//        let id = currUser.id
-//        for post in delegate.posts {
-//            if post.posterId == id || post.numInterested.contains(id!) {
-//                delegate.posts.append(post)
-//                }
-//            }
-    }
 }
-
-extension DetailVC: DetailViewDelegate {
-    func dismissDetailView() {
-        modalView.dismiss()
-    }
-}
-
-extension DetailVC: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("Updated location")
-        guard let currentLocation: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        self.currentLocation = currentLocation
-    }
-}
-

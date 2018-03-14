@@ -25,8 +25,7 @@ protocol DetailViewDelegate {
 class DetailView: UIView, UITableViewDataSource, UITableViewDelegate {
     
     var tableView: UITableView!
-    var cancelButton: UIButton!
-    var addToCartButton: UIButton!
+    var interestedButton: UIButton!
     var delegate: DetailViewDelegate?
     var currPost: Post!
     var currUser: Users!
@@ -38,19 +37,12 @@ class DetailView: UIView, UITableViewDataSource, UITableViewDelegate {
         layer.cornerRadius = 3
         clipsToBounds = true
         backgroundColor = .white
-        
-        cancelButton = UIButton(frame: CGRect(x: 15, y: 15, width: 18, height: 18))
-        cancelButton.contentMode = .scaleAspectFill
-        cancelButton.setImage(UIImage(named: "cancel"), for: .normal)
-        cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
-        addSubview(cancelButton)
-        
-        addToCartButton = UIButton(frame: CGRect(x: 0, y: frame.height - 50, width: frame.width, height: 50))
-        addToCartButton.backgroundColor = Constants.feedBackGroundColor
-        addToCartButton.setTitle("INTERESTED", for: .normal)
-        addToCartButton.setTitleColor(Constants.cellColor, for: .normal)
-        addToCartButton.titleLabel?.font = UIFont(name: "SFUIText-Medium", size: 14)
-        addSubview(addToCartButton)
+        interestedButton = UIButton(frame: CGRect(x: 0, y: frame.height - 50, width: frame.width, height: 50))
+        interestedButton.backgroundColor = Constants.feedBackGroundColor
+        interestedButton.setTitle("INTERESTED", for: .normal)
+        interestedButton.setTitleColor(Constants.cellColor, for: .normal)
+        interestedButton.titleLabel?.font = UIFont(name: "SFUIText-Medium", size: 14)
+        addSubview(interestedButton)
         
     }
     
@@ -89,7 +81,7 @@ class DetailView: UIView, UITableViewDataSource, UITableViewDelegate {
                     cell.textLabel?.text = self.postUser.name
                     Utils.getImage(withUrl: self.postUser.imageUrl!).then { img in
                         cell.imageView?.image = img
-                        }// if img != img then reload data
+                    }
                     cell.textLabel?.font = UIFont(name: "SFUIText-Medium", size: 20)
                     cell.textLabel?.textAlignment = .center
                     cell.imageView?.frame = CGRect(x: 10, y: 10, width: cell.frame.height * 0.01, height: cell.frame.height * 0.01)

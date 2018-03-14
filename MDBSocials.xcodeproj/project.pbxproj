@@ -8,9 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		6B086278204BD42100FF0690 /* LyftHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B086277204BD42100FF0690 /* LyftHelper.swift */; };
+		6B39471320592651004AE9B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B990420203BFC1F00EB5C4A /* AppDelegate.swift */; };
+		6B39471420592651004AE9B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B990420203BFC1F00EB5C4A /* AppDelegate.swift */; };
 		6B5D0C40204B803C00F8D186 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6B5D0C3F204B803C00F8D186 /* GoogleService-Info.plist */; };
 		6B5D0C41204B803C00F8D186 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6B5D0C3F204B803C00F8D186 /* GoogleService-Info.plist */; };
 		6B5D0C42204B803C00F8D186 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6B5D0C3F204B803C00F8D186 /* GoogleService-Info.plist */; };
+		6B68E2E7205944FD008F6D71 /* LoginVC-SetUpUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B68E2E6205944FD008F6D71 /* LoginVC-SetUpUI.swift */; };
+		6B68E2E920594644008F6D71 /* SignUpVC-SetUpUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B68E2E820594644008F6D71 /* SignUpVC-SetUpUI.swift */; };
+		6B68E2EB20594A0F008F6D71 /* SignUpVC-SetUpImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B68E2EA20594A0F008F6D71 /* SignUpVC-SetUpImagePicker.swift */; };
+		6B68E2ED20594BBD008F6D71 /* FeedVC-SetUpUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B68E2EC20594BBD008F6D71 /* FeedVC-SetUpUI.swift */; };
+		6B68E2EF20594C43008F6D71 /* FeedVC-CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B68E2EE20594C43008F6D71 /* FeedVC-CollectionView.swift */; };
+		6B68E2F120594D46008F6D71 /* EventVC-SetUpUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B68E2F020594D46008F6D71 /* EventVC-SetUpUI.swift */; };
+		6B68E2F320594D66008F6D71 /* EventVC-CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B68E2F220594D66008F6D71 /* EventVC-CollectionView.swift */; };
+		6B68E2F520594E3F008F6D71 /* DetailVC-SetUpUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B68E2F420594E3F008F6D71 /* DetailVC-SetUpUI.swift */; };
+		6B68E2F720594F53008F6D71 /* DetailVC-LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B68E2F620594F53008F6D71 /* DetailVC-LocationManager.swift */; };
+		6B68E2F9205951B8008F6D71 /* NewSocialVC-SetUpUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B68E2F8205951B8008F6D71 /* NewSocialVC-SetUpUI.swift */; };
 		6B990421203BFC1F00EB5C4A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B990420203BFC1F00EB5C4A /* AppDelegate.swift */; };
 		6B990423203BFC1F00EB5C4A /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B990422203BFC1F00EB5C4A /* LoginVC.swift */; };
 		6B990426203BFC1F00EB5C4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B990424203BFC1F00EB5C4A /* Main.storyboard */; };
@@ -67,6 +79,16 @@
 		3610DC97C356A189D114EFAB /* Pods-MDBSocialsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDBSocialsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDBSocialsTests/Pods-MDBSocialsTests.release.xcconfig"; sourceTree = "<group>"; };
 		6B086277204BD42100FF0690 /* LyftHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyftHelper.swift; sourceTree = "<group>"; };
 		6B5D0C3F204B803C00F8D186 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6B68E2E6205944FD008F6D71 /* LoginVC-SetUpUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginVC-SetUpUI.swift"; sourceTree = "<group>"; };
+		6B68E2E820594644008F6D71 /* SignUpVC-SetUpUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignUpVC-SetUpUI.swift"; sourceTree = "<group>"; };
+		6B68E2EA20594A0F008F6D71 /* SignUpVC-SetUpImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignUpVC-SetUpImagePicker.swift"; sourceTree = "<group>"; };
+		6B68E2EC20594BBD008F6D71 /* FeedVC-SetUpUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedVC-SetUpUI.swift"; sourceTree = "<group>"; };
+		6B68E2EE20594C43008F6D71 /* FeedVC-CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedVC-CollectionView.swift"; sourceTree = "<group>"; };
+		6B68E2F020594D46008F6D71 /* EventVC-SetUpUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventVC-SetUpUI.swift"; sourceTree = "<group>"; };
+		6B68E2F220594D66008F6D71 /* EventVC-CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventVC-CollectionView.swift"; sourceTree = "<group>"; };
+		6B68E2F420594E3F008F6D71 /* DetailVC-SetUpUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailVC-SetUpUI.swift"; sourceTree = "<group>"; };
+		6B68E2F620594F53008F6D71 /* DetailVC-LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailVC-LocationManager.swift"; sourceTree = "<group>"; };
+		6B68E2F8205951B8008F6D71 /* NewSocialVC-SetUpUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewSocialVC-SetUpUI.swift"; sourceTree = "<group>"; };
 		6B99041D203BFC1F00EB5C4A /* MDBSocials.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDBSocials.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B990420203BFC1F00EB5C4A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B990422203BFC1F00EB5C4A /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -133,10 +155,95 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B394708205923EE004AE9B0 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				6BF85979204ACACB0068E5B0 /* TabBarController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		6B3947092059240B004AE9B0 /* LoginViewController */ = {
+			isa = PBXGroup;
+			children = (
+				6B990422203BFC1F00EB5C4A /* LoginVC.swift */,
+				6B68E2E6205944FD008F6D71 /* LoginVC-SetUpUI.swift */,
+			);
+			path = LoginViewController;
+			sourceTree = "<group>";
+		};
+		6B39470A20592442004AE9B0 /* SignUpViewController */ = {
+			isa = PBXGroup;
+			children = (
+				6B990451203C526900EB5C4A /* SignUpVC.swift */,
+				6B68E2E820594644008F6D71 /* SignUpVC-SetUpUI.swift */,
+				6B68E2EA20594A0F008F6D71 /* SignUpVC-SetUpImagePicker.swift */,
+			);
+			path = SignUpViewController;
+			sourceTree = "<group>";
+		};
+		6B39470B20592467004AE9B0 /* FeedViewController */ = {
+			isa = PBXGroup;
+			children = (
+				6B39470D205924CE004AE9B0 /* Cells */,
+				6B990453203C52DD00EB5C4A /* FeedVC.swift */,
+				6B68E2EE20594C43008F6D71 /* FeedVC-CollectionView.swift */,
+				6B68E2EC20594BBD008F6D71 /* FeedVC-SetUpUI.swift */,
+			);
+			path = FeedViewController;
+			sourceTree = "<group>";
+		};
+		6B39470D205924CE004AE9B0 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6B990462203CC6DD00EB5C4A /* FeedViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6B39470E205924E8004AE9B0 /* EventViewController */ = {
+			isa = PBXGroup;
+			children = (
+				6BF85977204A910E0068E5B0 /* EventVC.swift */,
+				6B68E2F220594D66008F6D71 /* EventVC-CollectionView.swift */,
+				6B68E2F020594D46008F6D71 /* EventVC-SetUpUI.swift */,
+			);
+			path = EventViewController;
+			sourceTree = "<group>";
+		};
+		6B39470F20592519004AE9B0 /* DetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				6B39471020592559004AE9B0 /* Cells */,
+				6B990455203C531900EB5C4A /* DetailVC.swift */,
+				6B68E2F620594F53008F6D71 /* DetailVC-LocationManager.swift */,
+				6B68E2F420594E3F008F6D71 /* DetailVC-SetUpUI.swift */,
+			);
+			path = DetailViewController;
+			sourceTree = "<group>";
+		};
+		6B39471020592559004AE9B0 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6BF85983204AE9B30068E5B0 /* DetailTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6B3947112059256C004AE9B0 /* NewSocialViewController */ = {
+			isa = PBXGroup;
+			children = (
+				6B990457203C534B00EB5C4A /* NewSocialVC.swift */,
+				6B68E2F8205951B8008F6D71 /* NewSocialVC-SetUpUI.swift */,
+			);
+			path = NewSocialViewController;
+			sourceTree = "<group>";
+		};
 		6B990414203BFC1F00EB5C4A = {
 			isa = PBXGroup;
 			children = (
 				6B99041F203BFC1F00EB5C4A /* MDBSocials */,
+				6B99043F203BFC2000EB5C4A /* MDBSocialsUITests */,
 				6B990434203BFC2000EB5C4A /* MDBSocialsTests */,
 				6B99041E203BFC1F00EB5C4A /* Products */,
 				AB4F0F40E8900B871633F371 /* Pods */,
@@ -162,13 +269,6 @@
 				6B990459203C536100EB5C4A /* View */,
 				6B99045A203C536E00EB5C4A /* Model */,
 				6B990450203C517B00EB5C4A /* Controller */,
-				6B990420203BFC1F00EB5C4A /* AppDelegate.swift */,
-				6B990424203BFC1F00EB5C4A /* Main.storyboard */,
-				6B990427203BFC1F00EB5C4A /* Assets.xcassets */,
-				6B990429203BFC1F00EB5C4A /* LaunchScreen.storyboard */,
-				6B99043F203BFC2000EB5C4A /* MDBSocialsUITests */,
-				6B99042C203BFC1F00EB5C4A /* Info.plist */,
-				6B5D0C3F204B803C00F8D186 /* GoogleService-Info.plist */,
 			);
 			path = MDBSocials;
 			sourceTree = "<group>";
@@ -195,13 +295,19 @@
 		6B990450203C517B00EB5C4A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				6BF85979204ACACB0068E5B0 /* TabBarController.swift */,
-				6B990422203BFC1F00EB5C4A /* LoginVC.swift */,
-				6B990451203C526900EB5C4A /* SignUpVC.swift */,
-				6B990453203C52DD00EB5C4A /* FeedVC.swift */,
-				6BF85977204A910E0068E5B0 /* EventVC.swift */,
-				6B990455203C531900EB5C4A /* DetailVC.swift */,
-				6B990457203C534B00EB5C4A /* NewSocialVC.swift */,
+				6B394708205923EE004AE9B0 /* TabBar */,
+				6B3947092059240B004AE9B0 /* LoginViewController */,
+				6B39470A20592442004AE9B0 /* SignUpViewController */,
+				6B39470B20592467004AE9B0 /* FeedViewController */,
+				6B39470E205924E8004AE9B0 /* EventViewController */,
+				6B39470F20592519004AE9B0 /* DetailViewController */,
+				6B3947112059256C004AE9B0 /* NewSocialViewController */,
+				6B990420203BFC1F00EB5C4A /* AppDelegate.swift */,
+				6B990424203BFC1F00EB5C4A /* Main.storyboard */,
+				6B990429203BFC1F00EB5C4A /* LaunchScreen.storyboard */,
+				6B990427203BFC1F00EB5C4A /* Assets.xcassets */,
+				6B99042C203BFC1F00EB5C4A /* Info.plist */,
+				6B5D0C3F204B803C00F8D186 /* GoogleService-Info.plist */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -209,8 +315,7 @@
 		6B990459203C536100EB5C4A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6B990462203CC6DD00EB5C4A /* FeedViewCell.swift */,
-				6BF85983204AE9B30068E5B0 /* DetailTableViewCell.swift */,
+				6BC55560204A6883001C41A6 /* AKModalView.swift */,
 				6BC5555C204A67D4001C41A6 /* DetailView.swift */,
 			);
 			path = View;
@@ -239,7 +344,6 @@
 			children = (
 				6BC5555A204A679E001C41A6 /* Constants.swift */,
 				6BC5555E204A683D001C41A6 /* Utils.swift */,
-				6BC55560204A6883001C41A6 /* AKModalView.swift */,
 				6B086277204BD42100FF0690 /* LyftHelper.swift */,
 			);
 			path = Lib;
@@ -614,22 +718,32 @@
 				6BF85984204AE9B30068E5B0 /* DetailTableViewCell.swift in Sources */,
 				6B990466203CC72600EB5C4A /* UserAuth.swift in Sources */,
 				6B990458203C534B00EB5C4A /* NewSocialVC.swift in Sources */,
+				6B68E2F120594D46008F6D71 /* EventVC-SetUpUI.swift in Sources */,
 				6BC55561204A6883001C41A6 /* AKModalView.swift in Sources */,
 				6BC5555F204A683D001C41A6 /* Utils.swift in Sources */,
 				6BC5555D204A67D4001C41A6 /* DetailView.swift in Sources */,
+				6B68E2ED20594BBD008F6D71 /* FeedVC-SetUpUI.swift in Sources */,
 				6BF8597A204ACACB0068E5B0 /* TabBarController.swift in Sources */,
 				6B990456203C531900EB5C4A /* DetailVC.swift in Sources */,
+				6B68E2EB20594A0F008F6D71 /* SignUpVC-SetUpImagePicker.swift in Sources */,
 				6B990454203C52DD00EB5C4A /* FeedVC.swift in Sources */,
 				6B990460203C550500EB5C4A /* Post.swift in Sources */,
 				6BF85978204A910E0068E5B0 /* EventVC.swift in Sources */,
 				6B990423203BFC1F00EB5C4A /* LoginVC.swift in Sources */,
+				6B68E2F9205951B8008F6D71 /* NewSocialVC-SetUpUI.swift in Sources */,
 				6BF85980204ADD1F0068E5B0 /* FirebaseClient.swift in Sources */,
 				6BC5555B204A679E001C41A6 /* Constants.swift in Sources */,
+				6B68E2E920594644008F6D71 /* SignUpVC-SetUpUI.swift in Sources */,
+				6B68E2E7205944FD008F6D71 /* LoginVC-SetUpUI.swift in Sources */,
 				6B086278204BD42100FF0690 /* LyftHelper.swift in Sources */,
 				6B990463203CC6DD00EB5C4A /* FeedViewCell.swift in Sources */,
 				6B990452203C526900EB5C4A /* SignUpVC.swift in Sources */,
+				6B68E2F720594F53008F6D71 /* DetailVC-LocationManager.swift in Sources */,
+				6B68E2F320594D66008F6D71 /* EventVC-CollectionView.swift in Sources */,
+				6B68E2F520594E3F008F6D71 /* DetailVC-SetUpUI.swift in Sources */,
 				6B990421203BFC1F00EB5C4A /* AppDelegate.swift in Sources */,
 				6B99045E203C548300EB5C4A /* Users.swift in Sources */,
+				6B68E2EF20594C43008F6D71 /* FeedVC-CollectionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,6 +751,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B39471320592651004AE9B0 /* AppDelegate.swift in Sources */,
 				6BF85985204AE9B30068E5B0 /* DetailTableViewCell.swift in Sources */,
 				6B990436203BFC2000EB5C4A /* MDBSocialsTests.swift in Sources */,
 				6BF85981204ADD1F0068E5B0 /* FirebaseClient.swift in Sources */,
@@ -647,6 +762,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B39471420592651004AE9B0 /* AppDelegate.swift in Sources */,
 				6BF85986204AE9B30068E5B0 /* DetailTableViewCell.swift in Sources */,
 				6B990441203BFC2000EB5C4A /* MDBSocialsUITests.swift in Sources */,
 				6BF85982204ADD1F0068E5B0 /* FirebaseClient.swift in Sources */,
@@ -802,7 +918,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8M2294NU49;
-				INFOPLIST_FILE = MDBSocials/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/MDBSocials/Controller/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.MDBSocialsProjReformed2;
@@ -819,7 +935,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8M2294NU49;
-				INFOPLIST_FILE = MDBSocials/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/MDBSocials/Controller/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.MDBSocialsProjReformed2;

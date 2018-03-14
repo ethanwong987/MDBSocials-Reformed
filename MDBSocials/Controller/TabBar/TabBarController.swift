@@ -14,9 +14,5 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         tabBar.items?[1].title = "Events"
         tabBar.barTintColor = Constants.cellColor
-//        let events = EventVC()
-//        let feed = FeedVC()
-//        let viewControllerList = [feed, events]
-//        viewControllers = viewControllerList
     }
 }
