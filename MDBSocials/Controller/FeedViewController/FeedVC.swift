@@ -29,7 +29,7 @@ class FeedVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        FirebaseClient.getCurrentUser().then {user in
+        RESTAPIClient.getCurrentUser().then {user in
             self.currentUser = user
             } .then { _ in
                 DispatchQueue.main.async {

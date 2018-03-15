@@ -24,7 +24,7 @@ extension DetailView {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
         let uid = currPost.numInterested[indexPath.row]
         firstly {
-            return FirebaseClient.fetchUser(id: uid)
+            return RESTAPIClient.fetchUser(id: uid)
             }.then { user -> Void in
                 self.postUser = user
             } .then { _ in

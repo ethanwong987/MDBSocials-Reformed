@@ -27,7 +27,7 @@ class EventVC: UIViewController {
         self.setUpNavBar()
         self.changeNavBar()
         self.setUpCollectionView()
-        FirebaseClient.getCurrentUser().then {user in
+        RESTAPIClient.getCurrentUser().then {user in
             self.currentUser = user
             } .then { _ in
                 DispatchQueue.main.async {

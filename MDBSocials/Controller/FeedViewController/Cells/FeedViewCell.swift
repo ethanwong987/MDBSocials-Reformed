@@ -94,7 +94,7 @@ class FeedViewCell: UICollectionViewCell {
         let sfh = self.frame.height
         profileImageView = UIImageView(frame: CGRect(x: sfw * 0.02, y: sfh * 0.02, width: sfh * 0.15, height: sfh*0.15))
         firstly {
-            return FirebaseClient.fetchUser(id: currPost.posterId!)
+            return RESTAPIClient.fetchUser(id: currPost.posterId!)
             }.then { user -> Void in
                 //print("user is")
                 //print(user.toJSON())
