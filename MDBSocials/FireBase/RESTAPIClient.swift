@@ -15,7 +15,7 @@ import PromiseKit
 import Firebase
 import SwiftyJSON
 
-class FirebaseClient {
+class RESTAPIClient {
     static func fetchUser(id: String) -> Promise<Users> {
         return Promise { fulfill, _ in
             
@@ -62,6 +62,22 @@ class FirebaseClient {
             })
         }
     }
+    
+//    static func getCurrUser() -> Promise<Users> {
+//        return Promise { fulfill, error in
+//            Alamofire.request("https://mdb-socials.herokuapp.com/user/\(id)").responseJSON { response in
+//                if let response = response.result.value {
+//                    let json = JSON(response)
+//                    if let result = json.dictionaryObject {
+//                        if let user = UserModel(JSON: result){
+//                            fulfill(user)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+    
     static func createNewUser(id: String, name: String, email: String) {
         let usersRef = Database.database().reference().child("Users")
         let newUser = ["name": name, "email": email]
