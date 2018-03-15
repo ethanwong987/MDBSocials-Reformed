@@ -33,6 +33,7 @@ class FeedVC: UIViewController {
             self.currentUser = user
             } .then { _ in
                 DispatchQueue.main.async {
+                    print(self.currentUser)
                     self.setUpNavBar()
                     self.setUpCollectionView()
                     self.getPosts()

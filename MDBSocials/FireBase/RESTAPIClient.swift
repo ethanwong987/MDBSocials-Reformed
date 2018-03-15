@@ -13,6 +13,7 @@
 import Foundation
 import PromiseKit
 import Firebase
+import Alamofire
 import SwiftyJSON
 
 class RESTAPIClient {
@@ -48,28 +49,44 @@ class RESTAPIClient {
         }
     }
     
+//    static func getCurrentUser() -> Promise<Users> {
+//        return Promise { fulfill, _ in
+//            let ref = Database.database().reference()
+//            ref.child("Users").child((Auth.auth().currentUser?.uid)!).observeSingleEvent(of: .value, with: { (snapshot) in
+//                if var dict = snapshot.value as? [String: Any] {
+//                    dict["id"] = snapshot.key
+//                    let user = Users(JSON: dict)
+//                    DispatchQueue.main.async {
+//                        fulfill(user!)
+//                    }
+//                }
+//            })
+//        }
+//    }
+
     static func getCurrentUser() -> Promise<Users> {
-        return Promise { fulfill, _ in
-            let ref = Database.database().reference()
-            ref.child("Users").child((Auth.auth().currentUser?.uid)!).observeSingleEvent(of: .value, with: { (snapshot) in
-                if var dict = snapshot.value as? [String: Any] {
-                    dict["id"] = snapshot.key
-                    let user = Users(JSON: dict)
-                    DispatchQueue.main.async {
-                        fulfill(user!)
+        return Promise { fulfill, error in
+            Alamofire.request("https://mdbsocials-final.herokuapp.com/users/\((Auth.auth().currentUser?.uid)!)").responseJSON { response in
+                if let response = response.result.value {
+                    let json = JSON(response)
+                    if var result = json.dictionaryObject {
+                        result["id"] = (Auth.auth().currentUser?.uid)!
+                        if let user = Users(JSON: result) {
+                            fulfill(user)
+                        }
                     }
                 }
-            })
+            }
         }
     }
     
-//    static func getCurrUser() -> Promise<Users> {
+//    static func getUserWithId(id: String) -> Promise<Users> {
 //        return Promise { fulfill, error in
-//            Alamofire.request("https://mdb-socials.herokuapp.com/user/\(id)").responseJSON { response in
+//            Alamofire.request("https://mdbsocials-final.herokuapp.com/users/\(id)").responseJSON { response in
 //                if let response = response.result.value {
 //                    let json = JSON(response)
 //                    if let result = json.dictionaryObject {
-//                        if let user = UserModel(JSON: result){
+//                        if let user = Users(JSON: result){
 //                            fulfill(user)
 //                        }
 //                    }

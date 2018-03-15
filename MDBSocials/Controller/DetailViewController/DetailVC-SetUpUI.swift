@@ -183,12 +183,14 @@ extension DetailVC {
         interestButton.clipsToBounds = true
         interestButton.layer.borderColor = UIColor.white.cgColor
         interestButton.layer.borderWidth = 1
-        
+
+        print(currUser.toJSON())
         if currPost.posterId == currUser.id {
             interestButton.isEnabled = false
             interestButton.backgroundColor = Constants.MDBBlue
             interestButton.setTitle("Your Event!", for: .normal)
         } else {
+    
             if currPost.numInterested.contains(currUser.id!) {
                 interestButton.backgroundColor = Constants.MDBBlue
             }
